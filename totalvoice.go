@@ -17,11 +17,17 @@ type TotalVoice struct {
 	accessToken string
 	baseURI     string
 	client      *http.Client
+
+	Perfil *Perfil
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
 func NewTotalVoiceClient(accessToken string) *TotalVoice {
-	return &TotalVoice{accessToken: accessToken, baseURI: BaseURI}
+
+	c := &TotalVoice{accessToken: accessToken, baseURI: BaseURI}
+	c.Perfil = &Perfil{client: c}
+
+	return c
 }
 
 // NewClient - Cria TotalVoice struct.

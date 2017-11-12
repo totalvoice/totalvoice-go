@@ -1,6 +1,11 @@
 package totalvoice
 
+// Perfil client
+type Perfil struct {
+	client *TotalVoice
+}
+
 // ConsultaSaldo - Consulta saldo atual
-func (tvce *TotalVoice) ConsultaSaldo() (string, error) {
-	return tvce.Get("/saldo")
+func (p *Perfil) ConsultaSaldo() (string, error) {
+	return p.client.Get("/saldo")
 }
