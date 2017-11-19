@@ -1,7 +1,6 @@
 package totalvoice
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -107,7 +106,7 @@ func (tvce *TotalVoice) generateRequest(req *http.Request) (string, error) {
 		return "", err
 	}
 	defer res.Body.Close()
-	fmt.Println(res.Body)
+
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return "", err
