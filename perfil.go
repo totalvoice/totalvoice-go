@@ -26,6 +26,11 @@ func (p Perfil) MinhaConta() (string, error) {
 	return p.client.Get(RotaConta)
 }
 
+// RelatorioRecarga - Gera um relatorio com as recargas efetuadas
+func (p Perfil) RelatorioRecarga() (string, error) {
+	return p.client.Get(RotaConta + "/recargas")
+}
+
 // AtualizarConta - Consulta saldo atual
 func (p Perfil) AtualizarConta(values url.Values) (string, error) {
 	return p.client.Put(values, RotaConta)
