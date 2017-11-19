@@ -32,7 +32,11 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
 // NewClient - Cria TotalVoice struct.
 func NewClient(accessToken string, baseURI string) *TotalVoice {
-	return &TotalVoice{accessToken: accessToken, baseURI: baseURI}
+
+	c := NewTotalVoiceClient(accessToken)
+	c.SetBaseURI(baseURI)
+
+	return c
 }
 
 // Post -
@@ -54,6 +58,18 @@ func (tvce *TotalVoice) Post(formValues url.Values, path string) (*http.Response
 	return client.Do(req)
 }
 
+// Put -
+func (tvce *TotalVoice) Put(formValues url.Values, path string) (string, error) {
+
+	uri := tvce.buildURI(path)
+	req, err := http.NewRequest("PUT", uri, strings.NewReader(formValues.Encode()))
+	if err != nil {
+		return "", err
+	}
+
+	return tvce.generateRequest(req)
+}
+
 // Get -
 func (tvce *TotalVoice) Get(path string) (string, error) {
 
@@ -63,7 +79,7 @@ func (tvce *TotalVoice) Get(path string) (string, error) {
 		return "", err
 	}
 
-	return tvce.GenerateRequest(req)
+	return tvce.generateRequest(req)
 }
 
 // buildURI - Monta URI de acordo com o path
@@ -74,8 +90,8 @@ func (tvce *TotalVoice) buildURI(path string) string {
 	return strings.Join(s, "")
 }
 
-// GenerateRequest - Trata o response e retorna como string
-func (tvce *TotalVoice) GenerateRequest(req *http.Request) (string, error) {
+// generateRequest - Trata o response e retorna como string
+func (tvce *TotalVoice) generateRequest(req *http.Request) (string, error) {
 
 	client := tvce.client
 	if client == nil {
@@ -86,11 +102,10 @@ func (tvce *TotalVoice) GenerateRequest(req *http.Request) (string, error) {
 	req.Header.Add("Content-Type", "application/json")
 
 	res, err := client.Do(req)
-	defer res.Body.Close()
-
 	if err != nil {
 		return "", err
 	}
+	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
