@@ -1,9 +1,10 @@
 package totalvoice
 
 import (
+	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
@@ -39,30 +40,12 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	return c
 }
 
-// Post -
-func (tvce *TotalVoice) Post(formValues url.Values, path string) (*http.Response, error) {
-
-	client := tvce.client
-	if client == nil {
-		client = http.DefaultClient
-	}
-
-	req, err := http.NewRequest("POST", path, strings.NewReader(formValues.Encode()))
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Access-Token", tvce.accessToken)
-	req.Header.Add("Content-Type", "application/json")
-
-	return client.Do(req)
-}
-
-// Put -
-func (tvce *TotalVoice) Put(formValues url.Values, path string) (string, error) {
+// Post - HTTP POST
+func (tvce *TotalVoice) Post(values map[string]string, path string) (string, error) {
 
 	uri := tvce.buildURI(path)
-	req, err := http.NewRequest("PUT", uri, strings.NewReader(formValues.Encode()))
+	jsonValue, _ := json.Marshal(values)
+	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(jsonValue))
 	if err != nil {
 		return "", err
 	}
@@ -70,11 +53,36 @@ func (tvce *TotalVoice) Put(formValues url.Values, path string) (string, error) 
 	return tvce.generateRequest(req)
 }
 
-// Get -
+// Put - HTTP PUT
+func (tvce *TotalVoice) Put(values map[string]string, path string) (string, error) {
+
+	uri := tvce.buildURI(path)
+	jsonValue, _ := json.Marshal(values)
+	req, err := http.NewRequest("PUT", uri, bytes.NewBuffer(jsonValue))
+	if err != nil {
+		return "", err
+	}
+
+	return tvce.generateRequest(req)
+}
+
+// Get - HTTP GET
 func (tvce *TotalVoice) Get(path string) (string, error) {
 
 	uri := tvce.buildURI(path)
 	req, err := http.NewRequest("GET", uri, nil)
+	if err != nil {
+		return "", err
+	}
+
+	return tvce.generateRequest(req)
+}
+
+// Delete - HTTP DELETE
+func (tvce *TotalVoice) Delete(path string) (string, error) {
+
+	uri := tvce.buildURI(path)
+	req, err := http.NewRequest("DELETE", uri, nil)
 	if err != nil {
 		return "", err
 	}
