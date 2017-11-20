@@ -1,9 +1,5 @@
 package totalvoice
 
-import (
-	"strconv"
-)
-
 const (
 	// RotaSaldo - rota para consulta de saldo
 	RotaSaldo = "/saldo/"
@@ -28,14 +24,14 @@ func (p Perfil) MinhaConta() (string, error) {
 	return p.client.Get(RotaConta)
 }
 
-// RelatorioRecarga - Gera um relatorio com as recargas efetuadas
-func (p Perfil) RelatorioRecarga() (string, error) {
-	return p.client.Get(RotaConta + "recargas")
-}
-
 // AtualizarConta - Consulta saldo atual
 func (p Perfil) AtualizarConta(values map[string]string) (string, error) {
 	return p.client.Put(values, RotaConta)
+}
+
+// RelatorioRecarga - Gera um relatorio com as recargas efetuadas
+func (p Perfil) RelatorioRecarga() (string, error) {
+	return p.client.Get(RotaConta + "recargas")
 }
 
 // GeraURLRecarga - Gera uma URL para recarga de créditos
@@ -49,7 +45,12 @@ func (p Perfil) Webhooks() (string, error) {
 }
 
 // ExcluirWebhook - Retorna a lista de webhooks configurados para esta conta
-func (p Perfil) ExcluirWebhook(id int) (string, error) {
-	sID := strconv.Itoa(id)
-	return p.client.Delete(RotaWebhook + sID)
+func (p Perfil) ExcluirWebhook(nome string) (string, error) {
+	return p.client.Delete(RotaWebhook + nome)
+}
+
+// SalvaWebhook - Cadastra ou atualiza um webhook
+func (p Perfil) SalvaWebhook(nome string, url string) (string, error) {
+	params := map[string]string{"url": url}
+	return p.client.Put(params, RotaWebhook+nome)
 }
