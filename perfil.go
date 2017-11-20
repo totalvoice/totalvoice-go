@@ -1,7 +1,5 @@
 package totalvoice
 
-import "net/url"
-
 const (
 	// RotaSaldo - rota para consulta de saldo
 	RotaSaldo = "/saldo"
@@ -32,6 +30,6 @@ func (p Perfil) RelatorioRecarga() (string, error) {
 }
 
 // AtualizarConta - Consulta saldo atual
-func (p Perfil) AtualizarConta(values url.Values) (string, error) {
+func (p Perfil) AtualizarConta(values map[string]string) (string, error) {
 	return p.client.Put(values, RotaConta)
 }

@@ -1,9 +1,10 @@
 package totalvoice
 
 import (
+	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
@@ -40,29 +41,24 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 }
 
 // Post -
-func (tvce *TotalVoice) Post(formValues url.Values, path string) (*http.Response, error) {
+func (tvce *TotalVoice) Post(values map[string]string, path string) (string, error) {
 
-	client := tvce.client
-	if client == nil {
-		client = http.DefaultClient
-	}
-
-	req, err := http.NewRequest("POST", path, strings.NewReader(formValues.Encode()))
+	uri := tvce.buildURI(path)
+	jsonValue, _ := json.Marshal(values)
+	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(jsonValue))
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	req.Header.Add("Access-Token", tvce.accessToken)
-	req.Header.Add("Content-Type", "application/json")
-
-	return client.Do(req)
+	return tvce.generateRequest(req)
 }
 
 // Put -
-func (tvce *TotalVoice) Put(formValues url.Values, path string) (string, error) {
+func (tvce *TotalVoice) Put(values map[string]string, path string) (string, error) {
 
 	uri := tvce.buildURI(path)
-	req, err := http.NewRequest("PUT", uri, strings.NewReader(formValues.Encode()))
+	jsonValue, _ := json.Marshal(values)
+	req, err := http.NewRequest("PUT", uri, bytes.NewBuffer(jsonValue))
 	if err != nil {
 		return "", err
 	}
