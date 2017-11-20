@@ -33,3 +33,8 @@ func (p Perfil) RelatorioRecarga() (string, error) {
 func (p Perfil) AtualizarConta(values map[string]string) (string, error) {
 	return p.client.Put(values, RotaConta)
 }
+
+// GeraURLRecarga - Gera uma URL para recarga de créditos
+func (p Perfil) GeraURLRecarga() (string, error) {
+	return p.client.Get(RotaConta + "/urlrecarga")
+}
