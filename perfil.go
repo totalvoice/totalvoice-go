@@ -38,3 +38,8 @@ func (p Perfil) AtualizarConta(values map[string]string) (string, error) {
 func (p Perfil) GeraURLRecarga() (string, error) {
 	return p.client.Get(RotaConta + "/urlrecarga")
 }
+
+// Webhooks - Retorna a lista de webhooks configurados para esta conta
+func (p Perfil) Webhooks() (string, error) {
+	return p.client.Get(RotaWebhook)
+}
