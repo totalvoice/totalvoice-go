@@ -20,6 +20,7 @@ type TotalVoice struct {
 	client      *http.Client
 
 	Perfil *Perfil
+	Audio  *Audio
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -27,6 +28,7 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
 	c := &TotalVoice{accessToken: accessToken, baseURI: BaseURI}
 	c.Perfil = &Perfil{client: c}
+	c.Audio = &Audio{client: c}
 
 	return c
 }
