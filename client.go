@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -17,52 +18,22 @@ type Client struct {
 
 // CreateResource - HTTP POST
 func (c *Client) CreateResource(values map[string]string, path string) (string, error) {
-
-	uri := c.buildURI(path)
-	jsonValue, _ := json.Marshal(values)
-	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return "", err
-	}
-
-	return c.generateRequest(req)
+	return c.makeRequest("POST", path, values)
 }
 
 // UpdateResource - HTTP PUT
 func (c *Client) UpdateResource(values map[string]string, path string) (string, error) {
-
-	uri := c.buildURI(path)
-	jsonValue, _ := json.Marshal(values)
-	req, err := http.NewRequest("PUT", uri, bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return "", err
-	}
-
-	return c.generateRequest(req)
+	return c.makeRequest("PUT", path, values)
 }
 
 // GetResource - HTTP GET
-func (c *Client) GetResource(path string) (string, error) {
-
-	uri := c.buildURI(path)
-	req, err := http.NewRequest("GET", uri, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return c.generateRequest(req)
+func (c *Client) GetResource(path string, params map[string]string) (string, error) {
+	return c.makeRequest("GET", path, params)
 }
 
 // DeleteResource - HTTP DELETE
 func (c *Client) DeleteResource(path string) (string, error) {
-
-	uri := c.buildURI(path)
-	req, err := http.NewRequest("DELETE", uri, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return c.generateRequest(req)
+	return c.makeRequest("DELETE", path, nil)
 }
 
 // buildURI - Monta URI de acordo com o path
@@ -71,6 +42,46 @@ func (c *Client) buildURI(path string) string {
 	s := []string{base, path}
 
 	return strings.Join(s, "")
+}
+
+// MakeRequest -
+func (c *Client) makeRequest(method string, path string, values map[string]string) (string, error) {
+
+	uri := c.buildURI(path)
+
+	if len(values) > 0 && (method == "POST" || method == "PUT") {
+		rb, _ := json.Marshal(values)
+		req, err := http.NewRequest(method, uri, bytes.NewBuffer(rb))
+		if err != nil {
+			return "", err
+		}
+		return c.generateRequest(req)
+	}
+
+	if method == "GET" && len(values) > 0 {
+		query := c.buildQueryString(values)
+		uri = uri + "?" + query
+		req, err := http.NewRequest(method, uri, nil)
+		if err != nil {
+			return "", err
+		}
+		return c.generateRequest(req)
+	}
+
+	req, err := http.NewRequest("DELETE", uri, nil)
+	if err != nil {
+		return "", err
+	}
+
+	return c.generateRequest(req)
+}
+
+func (c *Client) buildQueryString(values map[string]string) string {
+	params := url.Values{}
+	for i, v := range values {
+		params.Add(i, v)
+	}
+	return params.Encode()
 }
 
 // generateRequest - Trata o response e retorna como string

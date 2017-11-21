@@ -7,7 +7,7 @@ const (
 
 // HTTPClient Interface for Clients
 type HTTPClient interface {
-	GetResource(path string) (string, error)
+	GetResource(path string, params map[string]string) (string, error)
 	CreateResource(values map[string]string, path string) (string, error)
 	UpdateResource(values map[string]string, path string) (string, error)
 	DeleteResource(path string) (string, error)

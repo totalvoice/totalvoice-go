@@ -31,11 +31,11 @@ func (p Audio) Enviar(numero string, urlAudio string, respostaUsuario bool, bina
 // BuscaAudio - Busca uma mensagem de audio pelo seu ID
 func (p Audio) BuscaAudio(id int) (string, error) {
 	sID := strconv.Itoa(id)
-	return p.client.GetResource(RotaAudio + sID)
+	return p.client.GetResource(RotaAudio+sID, nil)
 }
 
 // Relatorio - Relatório de mensagens de Audio
 func (p Audio) Relatorio(dataInicial time.Time, dataFinal time.Time) (string, error) {
 
-	return p.client.GetResource(RotaAudio + "relatorio")
+	return p.client.GetResource(RotaAudio+"relatorio", nil)
 }

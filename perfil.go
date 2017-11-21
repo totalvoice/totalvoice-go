@@ -16,12 +16,12 @@ type Perfil struct {
 
 // ConsultaSaldo - Consulta saldo atual
 func (p Perfil) ConsultaSaldo() (string, error) {
-	return p.client.GetResource(RotaSaldo)
+	return p.client.GetResource(RotaSaldo, nil)
 }
 
 // MinhaConta - Consulta saldo atual
 func (p Perfil) MinhaConta() (string, error) {
-	return p.client.GetResource(RotaConta)
+	return p.client.GetResource(RotaConta, nil)
 }
 
 // AtualizarConta - Consulta saldo atual
@@ -31,17 +31,17 @@ func (p Perfil) AtualizarConta(values map[string]string) (string, error) {
 
 // RelatorioRecarga - Gera um relatorio com as recargas efetuadas
 func (p Perfil) RelatorioRecarga() (string, error) {
-	return p.client.GetResource(RotaConta + "recargas")
+	return p.client.GetResource(RotaConta+"recargas", nil)
 }
 
 // GeraURLRecarga - Gera uma URL para recarga de créditos
 func (p Perfil) GeraURLRecarga() (string, error) {
-	return p.client.GetResource(RotaConta + "urlrecarga")
+	return p.client.GetResource(RotaConta+"urlrecarga", nil)
 }
 
 // Webhooks - Retorna a lista de webhooks configurados para esta conta
 func (p Perfil) Webhooks() (string, error) {
-	return p.client.GetResource(RotaWebhook)
+	return p.client.GetResource(RotaWebhook, nil)
 }
 
 // ExcluirWebhook - Retorna a lista de webhooks configurados para esta conta
