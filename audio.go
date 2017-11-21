@@ -12,7 +12,7 @@ const (
 
 // Audio client
 type Audio struct {
-	client *TotalVoice
+	client HTTPClient
 }
 
 // Enviar - Envia uma mensagem de audio
@@ -25,17 +25,17 @@ func (p Audio) Enviar(numero string, urlAudio string, respostaUsuario bool, bina
 		"bina":             bina,
 	}
 
-	return p.client.Post(params, RotaAudio)
+	return p.client.CreateResource(params, RotaAudio)
 }
 
 // BuscaAudio - Busca uma mensagem de audio pelo seu ID
 func (p Audio) BuscaAudio(id int) (string, error) {
 	sID := strconv.Itoa(id)
-	return p.client.Get(RotaAudio + sID)
+	return p.client.GetResource(RotaAudio+sID, nil)
 }
 
 // Relatorio - Relatório de mensagens de Audio
 func (p Audio) Relatorio(dataInicial time.Time, dataFinal time.Time) (string, error) {
 
-	return p.client.Get(RotaAudio + "relatorio")
+	return p.client.GetResource(RotaAudio+"relatorio", nil)
 }
