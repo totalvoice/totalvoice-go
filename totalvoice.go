@@ -1,23 +1,23 @@
 package totalvoice
 
-import (
-	"bytes"
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
-	"strings"
-)
-
 // BaseURI - URI Base
 const (
 	BaseURI = "https://api2.totalvoice.com.br"
 )
 
+// HTTPClient Interface for Clients
+type HTTPClient interface {
+	GetResource(path string) (string, error)
+	CreateResource(values map[string]string, path string) (string, error)
+	UpdateResource(values map[string]string, path string) (string, error)
+	DeleteResource(path string) (string, error)
+	SetBaseURI(value string)
+	GetBaseURI() string
+}
+
 // TotalVoice struct
 type TotalVoice struct {
-	accessToken string
-	baseURI     string
-	client      *http.Client
+	client HTTPClient
 
 	Perfil *Perfil
 	Audio  *Audio
@@ -26,114 +26,21 @@ type TotalVoice struct {
 // NewTotalVoiceClient - Cria TotalVoice struct.
 func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
-	c := &TotalVoice{accessToken: accessToken, baseURI: BaseURI}
-	c.Perfil = &Perfil{client: c}
-	c.Audio = &Audio{client: c}
+	c := &Client{accessToken: accessToken, baseURI: BaseURI}
 
-	return c
+	tvce := &TotalVoice{client: c}
+
+	tvce.Perfil = &Perfil{client: c}
+	tvce.Audio = &Audio{client: c}
+
+	return tvce
 }
 
 // NewClient - Cria TotalVoice struct.
 func NewClient(accessToken string, baseURI string) *TotalVoice {
 
-	c := NewTotalVoiceClient(accessToken)
-	c.SetBaseURI(baseURI)
+	tvce := NewTotalVoiceClient(accessToken)
+	tvce.client.SetBaseURI(baseURI)
 
-	return c
-}
-
-// Post - HTTP POST
-func (tvce *TotalVoice) Post(values map[string]string, path string) (string, error) {
-
-	uri := tvce.buildURI(path)
-	jsonValue, _ := json.Marshal(values)
-	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return "", err
-	}
-
-	return tvce.generateRequest(req)
-}
-
-// Put - HTTP PUT
-func (tvce *TotalVoice) Put(values map[string]string, path string) (string, error) {
-
-	uri := tvce.buildURI(path)
-	jsonValue, _ := json.Marshal(values)
-	req, err := http.NewRequest("PUT", uri, bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return "", err
-	}
-
-	return tvce.generateRequest(req)
-}
-
-// Get - HTTP GET
-func (tvce *TotalVoice) Get(path string) (string, error) {
-
-	uri := tvce.buildURI(path)
-	req, err := http.NewRequest("GET", uri, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return tvce.generateRequest(req)
-}
-
-// Delete - HTTP DELETE
-func (tvce *TotalVoice) Delete(path string) (string, error) {
-
-	uri := tvce.buildURI(path)
-	req, err := http.NewRequest("DELETE", uri, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return tvce.generateRequest(req)
-}
-
-// buildURI - Monta URI de acordo com o path
-func (tvce *TotalVoice) buildURI(path string) string {
-	base := tvce.GetBaseURI()
-	s := []string{base, path}
-
-	return strings.Join(s, "")
-}
-
-// generateRequest - Trata o response e retorna como string
-func (tvce *TotalVoice) generateRequest(req *http.Request) (string, error) {
-
-	client := tvce.client
-	if client == nil {
-		client = http.DefaultClient
-	}
-
-	req.Header.Add("Access-Token", tvce.accessToken)
-	req.Header.Add("Content-Type", "application/json")
-
-	res, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return string(body), nil
-}
-
-// SetBaseURI - seta a baseURI
-func (tvce *TotalVoice) SetBaseURI(value string) {
-	tvce.baseURI = value
-}
-
-// GetBaseURI - Get a base URL
-func (tvce *TotalVoice) GetBaseURI() string {
-	if tvce.baseURI == "" {
-		tvce.baseURI = BaseURI
-	}
-	return tvce.baseURI
+	return tvce
 }
