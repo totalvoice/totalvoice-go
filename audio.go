@@ -37,5 +37,9 @@ func (p Audio) BuscaAudio(id int) (string, error) {
 // Relatorio - Relatório de mensagens de Audio
 func (p Audio) Relatorio(dataInicial time.Time, dataFinal time.Time) (string, error) {
 
-	return p.client.GetResource(RotaAudio+"relatorio", nil)
+	params := map[string]string{
+		"data_inicial": dataInicial.UTC().String(),
+		"data_final":   dataFinal.UTC().String(),
+	}
+	return p.client.GetResource(RotaAudio+"relatorio", params)
 }
