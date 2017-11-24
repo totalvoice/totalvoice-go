@@ -1,6 +1,7 @@
 package totalvoice
 
 import (
+	"encoding/json"
 	"strconv"
 	"time"
 )
@@ -35,11 +36,18 @@ func (p Audio) BuscaAudio(id int) (string, error) {
 }
 
 // Relatorio - Relatório de mensagens de Audio
-func (p Audio) Relatorio(dataInicial time.Time, dataFinal time.Time) (string, error) {
+func (p Audio) Relatorio(dataInicial time.Time, dataFinal time.Time) (TvceResponse, error) {
 
 	params := map[string]string{
 		"data_inicial": dataInicial.UTC().String(),
 		"data_final":   dataFinal.UTC().String(),
 	}
-	return p.client.GetResource(RotaAudio+"relatorio", params)
+
+	var resp TvceResponse
+	r, _ := p.client.GetResource(RotaAudio+"relatorio", params)
+
+	if err := json.Unmarshal([]byte(r), &resp); err != nil {
+		return resp, err
+	}
+	return resp, nil
 }
