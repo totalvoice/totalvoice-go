@@ -58,9 +58,12 @@ func (c *Client) makeRequest(method string, path string, values map[string]strin
 		return c.generateRequest(req)
 	}
 
-	if method == "GET" && len(values) > 0 {
-		query := c.buildQueryString(values)
-		uri = uri + "?" + query
+	if method == "GET" {
+
+		if len(values) > 0 {
+			query := c.buildQueryString(values)
+			uri = uri + "?" + query
+		}
 		req, err := http.NewRequest(method, uri, nil)
 		if err != nil {
 			return "", err
