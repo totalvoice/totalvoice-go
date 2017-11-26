@@ -39,14 +39,14 @@ func (s AudioService) BuscaAudio(id int) (string, error) {
 }
 
 // Relatorio - Relatório de mensagens de Audio
-func (s AudioService) Relatorio(dataInicial time.Time, dataFinal time.Time) (handler.TvceResponse, error) {
+func (s AudioService) Relatorio(dataInicial time.Time, dataFinal time.Time) (*handler.TvceResponse, error) {
 
 	params := map[string]string{
 		"data_inicial": dataInicial.UTC().String(),
 		"data_final":   dataFinal.UTC().String(),
 	}
 
-	var resp handler.TvceResponse
+	resp := new(handler.TvceResponse)
 	err := s.Client.ListResource(RotaAudio+"/relatorio", resp, params)
 	return resp, err
 }
