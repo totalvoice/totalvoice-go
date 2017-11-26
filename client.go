@@ -1,9 +1,7 @@
 package totalvoice
 
 import (
-	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -17,23 +15,80 @@ type Client struct {
 }
 
 // CreateResource - HTTP POST
-func (c *Client) CreateResource(values map[string]string, path string) (string, error) {
-	return c.makeRequest("POST", path, values)
+func (c *Client) CreateResource(values map[string]string, path string) error {
+	return c.makeRequest("POST", path, values, nil)
 }
 
 // UpdateResource - HTTP PUT
-func (c *Client) UpdateResource(values map[string]string, path string) (string, error) {
-	return c.makeRequest("PUT", path, values)
+func (c *Client) UpdateResource(values map[string]string, path string, sid interface{}) error {
+	url := c.url(sid, path)
+	return c.makeRequest("PUT", url, values, nil)
 }
 
 // GetResource - HTTP GET
-func (c *Client) GetResource(path string, params map[string]string) (string, error) {
-	return c.makeRequest("GET", path, params)
+func (c *Client) GetResource(path string, sid interface{}, v interface{}) error {
+	url := c.url(sid, path)
+	return c.makeRequest("GET", url, nil, v)
+	//if err := json.Unmarshal([]byte(r), &v); err != nil {
+	//	return v, err
+	//}
+}
+
+// ListResource - HTTP GET
+func (c *Client) ListResource(path string, v interface{}, params map[string]string) error {
+	return c.makeRequest("GET", path, params, v)
 }
 
 // DeleteResource - HTTP DELETE
-func (c *Client) DeleteResource(path string) (string, error) {
-	return c.makeRequest("DELETE", path, nil)
+func (c *Client) DeleteResource(path string, sid interface{}) error {
+	url := c.url(sid, path)
+	return c.makeRequest("DELETE", url, nil, nil)
+}
+
+// Make a request to the Twilio API.
+func (c *Client) makeRequest(method string, path string, values map[string]string, v interface{}) error {
+
+	uri := c.buildURI(path)
+	client := c.client
+	if client == nil {
+		client = http.DefaultClient
+	}
+
+	rb := new(strings.Reader)
+	if len(values) > 0 && (method == "POST" || method == "PUT") {
+		r, _ := json.Marshal(values)
+		rb = strings.NewReader(string(r))
+	}
+
+	if method == "GET" && len(values) > 0 {
+		if len(values) > 0 {
+			query := c.buildQueryString(values)
+			uri = uri + "?" + query
+		}
+	}
+	req, err := http.NewRequest(method, uri, rb)
+	if err != nil {
+		return err
+	}
+	//req = withContext(req, ctx)
+	req.Header.Add("Access-Token", c.accessToken)
+	req.Header.Add("Content-Type", "application/json")
+
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&v)
+
+	return nil
+}
+
+func (c *Client) url(sid interface{}, path string) string {
+	if sid != nil {
+		path = strings.Join([]string{path, sid.(string)}, "/")
+	}
+	return path
 }
 
 // buildURI - Monta URI de acordo com o path
@@ -44,72 +99,12 @@ func (c *Client) buildURI(path string) string {
 	return strings.Join(s, "")
 }
 
-// MakeRequest -
-func (c *Client) makeRequest(method string, path string, values map[string]string) (string, error) {
-
-	uri := c.buildURI(path)
-
-	if len(values) > 0 && (method == "POST" || method == "PUT") {
-		rb, _ := json.Marshal(values)
-		req, err := http.NewRequest(method, uri, bytes.NewBuffer(rb))
-		if err != nil {
-			return "", err
-		}
-		return c.generateRequest(req)
-	}
-
-	if method == "GET" {
-
-		if len(values) > 0 {
-			query := c.buildQueryString(values)
-			uri = uri + "?" + query
-		}
-		req, err := http.NewRequest(method, uri, nil)
-		if err != nil {
-			return "", err
-		}
-		return c.generateRequest(req)
-	}
-
-	req, err := http.NewRequest("DELETE", uri, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return c.generateRequest(req)
-}
-
 func (c *Client) buildQueryString(values map[string]string) string {
 	params := url.Values{}
 	for i, v := range values {
 		params.Add(i, v)
 	}
 	return params.Encode()
-}
-
-// generateRequest - Trata o response e retorna como string
-func (c *Client) generateRequest(req *http.Request) (string, error) {
-
-	client := c.client
-	if client == nil {
-		client = http.DefaultClient
-	}
-
-	req.Header.Add("Access-Token", c.accessToken)
-	req.Header.Add("Content-Type", "application/json")
-
-	res, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return string(body), nil
 }
 
 // SetBaseURI - seta a baseURI

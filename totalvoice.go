@@ -1,35 +1,20 @@
 package totalvoice
 
+import "github.com/totalvoice/go-client/api"
+
 // BaseURI - URI Base
 const (
 	BaseURI = "https://api2.totalvoice.com.br"
 )
 
-// HTTPClient Interface for Clients
-type HTTPClient interface {
-	GetResource(path string, params map[string]string) (string, error)
-	CreateResource(values map[string]string, path string) (string, error)
-	UpdateResource(values map[string]string, path string) (string, error)
-	DeleteResource(path string) (string, error)
-	SetBaseURI(value string)
-	GetBaseURI() string
-}
-
-// TvceResponse -
-type TvceResponse struct {
-	Status   int    `json:"status"`
-	Sucesso  bool   `json:"sucesso"`
-	Motivo   int    `json:"motivo"`
-	Mensagem string `json:"mensagem"`
-	Dados    interface{}
-}
-
 // TotalVoice struct
 type TotalVoice struct {
-	client HTTPClient
+	client api.HTTPClient
 
-	Perfil *Perfil
-	Audio  *Audio
+	Perfil  *api.PerfilService
+	Audio   *api.AudioService
+	Webhook *api.WebhookService
+	Saldo   *api.SaldoService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -39,8 +24,10 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
 	tvce := &TotalVoice{client: c}
 
-	tvce.Perfil = &Perfil{client: c}
-	tvce.Audio = &Audio{client: c}
+	tvce.Perfil = &api.PerfilService{Client: c}
+	tvce.Audio = &api.AudioService{Client: c}
+	tvce.Webhook = &api.WebhookService{Client: c}
+	tvce.Saldo = &api.SaldoService{Client: c}
 
 	return tvce
 }
