@@ -12,6 +12,32 @@ const (
 	RotaAudio = "/audio"
 )
 
+// Audio struct
+type Audio struct {
+	Status   int    `json:"status"`
+	Sucesso  bool   `json:"sucesso"`
+	Motivo   int    `json:"motivo"`
+	Mensagem string `json:"mensagem"`
+	Dados    struct {
+		ID                     int    `json:"id"`
+		NumeroDestino          string `json:"numero_destino"`
+		DataCriacao            string `json:"data_criacao"`
+		DataInicio             string `json:"data_inicio"`
+		Tipo                   string `json:"tipo"`
+		Status                 string `json:"status"`
+		DuracaoSegundos        int    `json:"duracao_segundos"`
+		Duracao                string `json:"duracao"`
+		DuracaoCobradaSegundos int    `json:"duracao_cobrada_segundos"`
+		DuracaoCobrada         string `json:"duracao_cobrada"`
+		DuracaoFaladaSegundos  int    `json:"duracao_falada_segundos"`
+		DuracaoFalada          string `json:"duracao_falada"`
+		Preco                  int    `json:"preco"`
+		URLAudio               string `json:"url_audio"`
+		RespostaUsuario        bool   `json:"resposta_usuario"`
+		Resposta               string `json:"resposta"`
+	} `json:"dados"`
+}
+
 // AudioService service
 type AudioService struct {
 	Client HTTPClient
@@ -32,10 +58,11 @@ func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario boo
 }
 
 // BuscaAudio - Busca uma mensagem de audio pelo seu ID
-func (s AudioService) BuscaAudio(id int) (string, error) {
+func (s AudioService) BuscaAudio(id int) (*Audio, error) {
 	sID := strconv.Itoa(id)
-	err := s.Client.GetResource(RotaAudio, sID, nil)
-	return "", err
+	resp := new(Audio)
+	err := s.Client.GetResource(RotaAudio, sID, resp)
+	return resp, err
 }
 
 // Relatorio - Relatório de mensagens de Audio
