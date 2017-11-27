@@ -1,10 +1,5 @@
 package api
 
-const (
-	// RotaWebhook - rota para o webhook
-	RotaWebhook = "/webhook"
-)
-
 // Webhook - Struct de retorno
 type Webhook struct {
 	Status   int    `json:"status"`

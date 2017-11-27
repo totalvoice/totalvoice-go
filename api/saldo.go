@@ -1,10 +1,5 @@
 package api
 
-const (
-	// RotaSaldo - rota para consulta de saldo
-	RotaSaldo = "/saldo"
-)
-
 // Saldo - struct
 type Saldo struct {
 	Status   int    `json:"status"`

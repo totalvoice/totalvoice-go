@@ -1,10 +1,5 @@
 package api
 
-const (
-	// RotaConta - rota para consulta dos dados da conta
-	RotaConta = "/conta"
-)
-
 // Conta -
 type Conta struct {
 	Status   int    `json:"status"`
