@@ -25,7 +25,7 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce := &TotalVoice{client: c}
 
 	tvce.Perfil = &api.PerfilService{Client: c}
-	tvce.Audio = &api.AudioService{Client: c}
+	tvce.Audio = &api.AudioService{Client: c, Relatorio: &api.AudioRelatorioService{Client: c}}
 	tvce.Webhook = &api.WebhookService{Client: c}
 	tvce.Saldo = &api.SaldoService{Client: c}
 

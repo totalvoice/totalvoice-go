@@ -34,6 +34,8 @@ type Audio struct {
 // AudioService service
 type AudioService struct {
 	Client HTTPClient
+
+	Relatorio *AudioRelatorioService
 }
 
 // Enviar - Envia uma mensagem de audio
