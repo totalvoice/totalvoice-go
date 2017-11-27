@@ -1,7 +1,7 @@
 package api
 
-// Conta -
-type Conta struct {
+// Perfil struct
+type Perfil struct {
 	Status   int    `json:"status"`
 	Sucesso  bool   `json:"sucesso"`
 	Motivo   int    `json:"motivo"`
@@ -51,17 +51,17 @@ type PerfilService struct {
 }
 
 // MinhaConta - Consulta saldo atual
-func (p PerfilService) MinhaConta() (*Conta, error) {
-	conta := new(Conta)
-	err := p.Client.GetResource(RotaConta, nil, conta)
-	return conta, err
+func (p PerfilService) MinhaConta() (*Perfil, error) {
+	perfil := new(Perfil)
+	err := p.Client.GetResource(RotaConta, nil, perfil)
+	return perfil, err
 }
 
 // AtualizarConta - Consulta saldo atual
-func (p PerfilService) AtualizarConta(values map[string]string) (*Conta, error) {
-	conta := new(Conta)
-	err := p.Client.UpdateResource(values, RotaConta, "", conta)
-	return conta, err
+func (p PerfilService) AtualizarConta(values map[string]string) (*Perfil, error) {
+	perfil := new(Perfil)
+	err := p.Client.UpdateResource(values, RotaConta, "", perfil)
+	return perfil, err
 }
 
 // RelatorioRecarga - Gera um relatorio com as recargas efetuadas
