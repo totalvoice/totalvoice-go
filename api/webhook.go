@@ -26,13 +26,15 @@ func (s WebhookService) Listar() (*Webhook, error) {
 	return webhook, err
 }
 
-// Excluir - Retorna a lista de webhooks configurados para esta conta
+// Excluir - Apaga um webhook
 func (s WebhookService) Excluir(nome string) error {
 	return s.Client.DeleteResource(RotaWebhook, nome)
 }
 
 // Salva - Cadastra ou atualiza um webhook
-func (s WebhookService) Salva(nome string, url string) error {
+func (s WebhookService) Salva(nome, url string) (*Webhook, error) {
 	params := map[string]string{"url": url}
-	return s.Client.UpdateResource(params, RotaWebhook, nome)
+	webhook := new(Webhook)
+	err := s.Client.UpdateResource(params, RotaWebhook, nome, webhook)
+	return webhook, err
 }

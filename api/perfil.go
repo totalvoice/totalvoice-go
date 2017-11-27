@@ -60,7 +60,7 @@ func (p PerfilService) MinhaConta() (*Conta, error) {
 // AtualizarConta - Consulta saldo atual
 func (p PerfilService) AtualizarConta(values map[string]string) (*Conta, error) {
 	conta := new(Conta)
-	err := p.Client.UpdateResource(values, RotaConta, "")
+	err := p.Client.UpdateResource(values, RotaConta, "", conta)
 	return conta, err
 }
 

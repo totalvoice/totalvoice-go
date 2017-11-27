@@ -20,18 +20,15 @@ func (c *Client) CreateResource(values map[string]string, path string, v interfa
 }
 
 // UpdateResource - HTTP PUT
-func (c *Client) UpdateResource(values map[string]string, path string, sid interface{}) error {
+func (c *Client) UpdateResource(values map[string]string, path string, sid interface{}, v interface{}) error {
 	url := c.url(sid, path)
-	return c.makeRequest("PUT", url, values, nil)
+	return c.makeRequest("PUT", url, values, v)
 }
 
 // GetResource - HTTP GET
 func (c *Client) GetResource(path string, sid interface{}, v interface{}) error {
 	url := c.url(sid, path)
 	return c.makeRequest("GET", url, nil, v)
-	//if err := json.Unmarshal([]byte(r), &v); err != nil {
-	//	return v, err
-	//}
 }
 
 // ListResource - HTTP GET
