@@ -15,8 +15,8 @@ type Client struct {
 }
 
 // CreateResource - HTTP POST
-func (c *Client) CreateResource(values map[string]string, path string) error {
-	return c.makeRequest("POST", path, values, nil)
+func (c *Client) CreateResource(values map[string]string, path string, v interface{}) error {
+	return c.makeRequest("POST", path, values, v)
 }
 
 // UpdateResource - HTTP PUT
