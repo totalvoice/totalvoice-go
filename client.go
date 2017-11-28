@@ -1,6 +1,7 @@
 package totalvoice
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/url"
@@ -42,7 +43,7 @@ func (c *Client) DeleteResource(path string, sid interface{}) error {
 	return c.makeRequest("DELETE", url, nil, nil)
 }
 
-// Make a request to the Twilio API.
+// makeRequest Make a request to the Twilio API.
 func (c *Client) makeRequest(method string, path string, values map[string]string, v interface{}) error {
 
 	uri := c.buildURI(path)
@@ -51,10 +52,9 @@ func (c *Client) makeRequest(method string, path string, values map[string]strin
 		client = http.DefaultClient
 	}
 
-	rb := new(strings.Reader)
+	b := new(bytes.Buffer)
 	if len(values) > 0 && (method == "POST" || method == "PUT") {
-		r, _ := json.Marshal(values)
-		rb = strings.NewReader(string(r))
+		json.NewEncoder(b).Encode(values)
 	}
 
 	if method == "GET" && len(values) > 0 {
@@ -63,7 +63,7 @@ func (c *Client) makeRequest(method string, path string, values map[string]strin
 			uri = uri + "?" + query
 		}
 	}
-	req, err := http.NewRequest(method, uri, rb)
+	req, err := http.NewRequest(method, uri, b)
 	if err != nil {
 		return err
 	}
@@ -81,6 +81,7 @@ func (c *Client) makeRequest(method string, path string, values map[string]strin
 	return nil
 }
 
+// url - monta a URL com o parametro ID
 func (c *Client) url(sid interface{}, path string) string {
 	if sid != nil {
 		path = strings.Join([]string{path, sid.(string)}, "/")
@@ -96,6 +97,7 @@ func (c *Client) buildURI(path string) string {
 	return strings.Join(s, "")
 }
 
+// buildQueryString
 func (c *Client) buildQueryString(values map[string]string) string {
 	params := url.Values{}
 	for i, v := range values {
