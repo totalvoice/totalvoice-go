@@ -22,6 +22,8 @@ type Conta struct {
 // ContaService service
 type ContaService struct {
 	Client HTTPClient
+
+	Relatorio *ContaRelatorioService
 }
 
 // Criar - Cria uma nova conta na plataforma
