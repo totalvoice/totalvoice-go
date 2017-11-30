@@ -13,8 +13,8 @@ const (
 type TotalVoice struct {
 	client api.HTTPClient
 
-	//Perfil *api.PerfilService
-	Audio *api.AudioService
+	Perfil *api.PerfilService
+	Audio  *api.AudioService
 	//Webhook  *api.WebhookService
 	Saldo *api.SaldoService
 	Conta *api.ContaService
@@ -29,7 +29,7 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
 	handler := api.Response{}
 
-	//tvce.Perfil = api.NewPerfilService(client)
+	tvce.Perfil = api.NewPerfilService(client, handler)
 	tvce.Audio = api.NewAudioService(client, handler)
 	//tvce.Webhook = &api.WebhookService{Client: c}
 	tvce.Saldo = api.NewSaldoService(client, handler)
