@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/totalvoice/go-client/api"
 )
 
 // Client struct
@@ -15,36 +17,36 @@ type Client struct {
 	client      *http.Client
 }
 
-// CreateResource - HTTP POST
-func (c *Client) CreateResource(values map[string]string, path string, v interface{}) error {
-	return c.makeRequest("POST", path, values, v)
-}
-
-// UpdateResource - HTTP PUT
-func (c *Client) UpdateResource(values map[string]string, path string, sid interface{}, v interface{}) error {
-	url := c.url(sid, path)
-	return c.makeRequest("PUT", url, values, v)
-}
-
 // GetResource - HTTP GET
-func (c *Client) GetResource(path string, sid interface{}, v interface{}) error {
+func (c *Client) GetResource(model api.Model, path string, sid interface{}) (*http.Response, error) {
 	url := c.url(sid, path)
-	return c.makeRequest("GET", url, nil, v)
+	return c.makeRequest("GET", model, url, nil)
 }
 
 // ListResource - HTTP GET
-func (c *Client) ListResource(path string, v interface{}, params map[string]string) error {
-	return c.makeRequest("GET", path, params, v)
+func (c *Client) ListResource(model api.Model, path string, params map[string]string) (*http.Response, error) {
+	return c.makeRequest("GET", model, path, params)
+}
+
+// CreateResource - HTTP POST
+func (c *Client) CreateResource(model api.Model, path string) (*http.Response, error) {
+	return c.makeRequest("POST", model, path, nil)
+}
+
+// UpdateResource - HTTP PUT
+func (c *Client) UpdateResource(model api.Model, path string, sid interface{}) (*http.Response, error) {
+	url := c.url(sid, path)
+	return c.makeRequest("PUT", model, url, nil)
 }
 
 // DeleteResource - HTTP DELETE
-func (c *Client) DeleteResource(path string, sid interface{}) error {
+func (c *Client) DeleteResource(path string, sid interface{}) (*http.Response, error) {
 	url := c.url(sid, path)
-	return c.makeRequest("DELETE", url, nil, nil)
+	return c.makeRequest("DELETE", nil, url, nil)
 }
 
 // makeRequest Make a request to the Twilio API.
-func (c *Client) makeRequest(method string, path string, values map[string]string, v interface{}) error {
+func (c *Client) makeRequest(method string, model api.Model, path string, params map[string]string) (*http.Response, error) {
 
 	uri := c.buildURI(path)
 	client := c.client
@@ -53,32 +55,26 @@ func (c *Client) makeRequest(method string, path string, values map[string]strin
 	}
 
 	b := new(bytes.Buffer)
-	if len(values) > 0 && (method == "POST" || method == "PUT") {
-		json.NewEncoder(b).Encode(values)
+	if method == "POST" || method == "PUT" {
+		json.NewEncoder(b).Encode(model)
 	}
 
-	if method == "GET" && len(values) > 0 {
-		if len(values) > 0 {
-			query := c.buildQueryString(values)
+	if method == "GET" && len(params) > 0 {
+		if len(params) > 0 {
+			query := c.buildQueryString(params)
 			uri = uri + "?" + query
 		}
 	}
 	req, err := http.NewRequest(method, uri, b)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	//req = withContext(req, ctx)
+
+	// Headers
 	req.Header.Add("Access-Token", c.accessToken)
 	req.Header.Add("Content-Type", "application/json")
 
-	res, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&v)
-
-	return nil
+	return client.Do(req)
 }
 
 // url - monta a URL com o parametro ID

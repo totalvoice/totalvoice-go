@@ -1,39 +1,23 @@
 package api
 
-// ContaRelatorio struct
-type ContaRelatorio struct {
-	Status   int    `json:"status"`
-	Sucesso  bool   `json:"sucesso"`
-	Motivo   int    `json:"motivo"`
-	Mensagem string `json:"mensagem"`
-	Dados    struct {
-		Relatorio []struct {
-			ID              int         `json:"id"`
-			Nome            string      `json:"nome"`
-			CpfCnpj         string      `json:"cpf_cnpj"`
-			Login           string      `json:"login"`
-			Saldo           int         `json:"saldo"`
-			Telefone        string      `json:"telefone"`
-			AccessToken     string      `json:"access_token"`
-			PrecoFixo       string      `json:"preco_fixo"`
-			PrecoCel        string      `json:"preco_cel"`
-			PrecoRamal      string      `json:"preco_ramal"`
-			EmailFinanceiro string      `json:"email_financeiro"`
-			NomeFantasia    interface{} `json:"nome_fantasia"`
-			MetodoPagamento string      `json:"metodo_pagamento"`
-			FaturaAtual     int         `json:"fatura_atual"`
-		} `json:"relatorio"`
-	} `json:"dados"`
-}
+import "github.com/totalvoice/go-client/api/model"
 
 // ContaRelatorioService service
 type ContaRelatorioService struct {
-	Client HTTPClient
+	client  HTTPClient
+	handler Response
 }
 
 // Gerar - Lista contas criadas por mim
-func (s ContaRelatorioService) Gerar() (*ContaRelatorio, error) {
-	resp := new(ContaRelatorio)
-	err := s.Client.ListResource(RotaConta+"/relatorio", resp, nil)
-	return resp, err
+func (s ContaRelatorioService) Gerar() (*model.ContaRelatorioResponse, error) {
+
+	relatorio := new(model.ContaRelatorio)
+	response := new(model.ContaRelatorioResponse)
+
+	http, err := s.client.ListResource(relatorio, RotaConta+"/relatorio", nil)
+	if err != nil {
+		return response, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.ContaRelatorioResponse), err
 }

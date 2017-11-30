@@ -1,12 +1,14 @@
 package api
 
+import "net/http"
+
 // HTTPClient Interface for Clients
 type HTTPClient interface {
-	GetResource(path string, sid interface{}, v interface{}) error
-	ListResource(path string, v interface{}, params map[string]string) error
-	CreateResource(values map[string]string, path string, v interface{}) error
-	UpdateResource(values map[string]string, path string, sid interface{}, v interface{}) error
-	DeleteResource(path string, sid interface{}) error
+	GetResource(model Model, path string, sid interface{}) (*http.Response, error)
+	ListResource(model Model, path string, params map[string]string) (*http.Response, error)
+	CreateResource(model Model, path string) (*http.Response, error)
+	UpdateResource(model Model, path string, sid interface{}) (*http.Response, error)
+	DeleteResource(path string, sid interface{}) (*http.Response, error)
 	SetBaseURI(value string)
 	GetBaseURI() string
 }
