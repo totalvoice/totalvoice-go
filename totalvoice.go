@@ -1,6 +1,8 @@
 package totalvoice
 
-import "github.com/totalvoice/go-client/api"
+import (
+	"github.com/totalvoice/go-client/api"
+)
 
 // BaseURI - URI Base
 const (
@@ -11,25 +13,30 @@ const (
 type TotalVoice struct {
 	client api.HTTPClient
 
-	Perfil  *api.PerfilService
-	Audio   *api.AudioService
-	Webhook *api.WebhookService
-	Saldo   *api.SaldoService
-	Conta   *api.ContaService
+	//Perfil *api.PerfilService
+	Audio *api.AudioService
+	//Webhook  *api.WebhookService
+	//Saldo    *api.SaldoService
+	Conta *api.ContaService
+	//Composto *api.CompostoService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
 func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
-	c := &Client{accessToken: accessToken, baseURI: BaseURI}
+	client := &Client{accessToken: accessToken, baseURI: BaseURI}
+	tvce := &TotalVoice{client: client}
 
-	tvce := &TotalVoice{client: c}
+	handler := api.Response{}
 
-	tvce.Perfil = &api.PerfilService{Client: c}
-	tvce.Audio = &api.AudioService{Client: c, Relatorio: &api.AudioRelatorioService{Client: c}}
-	tvce.Webhook = &api.WebhookService{Client: c}
-	tvce.Saldo = &api.SaldoService{Client: c}
-	tvce.Conta = &api.ContaService{Client: c}
+	//tvce.Perfil = api.NewPerfilService(client)
+	tvce.Audio = api.NewAudioService(client, handler)
+	//tvce.Webhook = &api.WebhookService{Client: c}
+	//tvce.Saldo = &api.SaldoService{Client: c}
+
+	tvce.Conta = api.NewContaService(client, handler)
+
+	//tvce.Composto = &api.CompostoService{Client: c}
 
 	return tvce
 }

@@ -11,4 +11,6 @@ const (
 	RotaWebhook = "/webhook"
 	// RotaSaldo - rota para consulta de saldo
 	RotaSaldo = "/saldo"
+	// RotaComposto - rota para composto
+	RotaComposto = "/composto"
 )

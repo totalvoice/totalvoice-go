@@ -2,61 +2,63 @@ package api
 
 import (
 	"strconv"
-	"time"
-)
 
-// Audio struct
-type Audio struct {
-	Status   int    `json:"status"`
-	Sucesso  bool   `json:"sucesso"`
-	Motivo   int    `json:"motivo"`
-	Mensagem string `json:"mensagem"`
-	Dados    struct {
-		ID                     int       `json:"id"`
-		NumeroDestino          string    `json:"numero_destino"`
-		DataCriacao            time.Time `json:"data_criacao"`
-		DataInicio             time.Time `json:"data_inicio"`
-		Tipo                   string    `json:"tipo"`
-		Status                 string    `json:"status"`
-		DuracaoSegundos        int       `json:"duracao_segundos"`
-		Duracao                string    `json:"duracao"`
-		DuracaoCobradaSegundos int       `json:"duracao_cobrada_segundos"`
-		DuracaoCobrada         string    `json:"duracao_cobrada"`
-		DuracaoFaladaSegundos  int       `json:"duracao_falada_segundos"`
-		DuracaoFalada          string    `json:"duracao_falada"`
-		Preco                  int       `json:"preco"`
-		URLAudio               string    `json:"url_audio"`
-		RespostaUsuario        bool      `json:"resposta_usuario"`
-		Resposta               string    `json:"resposta"`
-	} `json:"dados"`
-}
+	"github.com/totalvoice/go-client/api/model"
+)
 
 // AudioService service
 type AudioService struct {
-	Client HTTPClient
+	client  HTTPClient
+	handler Response
 
 	Relatorio *AudioRelatorioService
 }
 
-// Enviar - Envia uma mensagem de audio
-func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string) (*Audio, error) {
+// NewAudioService -
+func NewAudioService(httpClient HTTPClient, handler Response) *AudioService {
 
-	params := map[string]string{
-		"numero_destino":   numero,
-		"url_audio":        urlAudio,
-		"resposta_usuario": strconv.FormatBool(respostaUsuario),
-		"bina":             bina,
+	service := &AudioService{
+		client:  httpClient,
+		handler: handler,
+		Relatorio: &AudioRelatorioService{
+			client:  httpClient,
+			handler: handler,
+		},
 	}
 
-	resp := new(Audio)
-	err := s.Client.CreateResource(params, RotaAudio, resp)
-	return resp, err
+	return service
+}
+
+// Enviar - Envia uma mensagem de audio
+func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string) (*model.AudioResponse, error) {
+
+	audio := new(model.Audio)
+	audio.NumeroDestino = numero
+	audio.URLAudio = urlAudio
+	audio.RespostaUsuario = respostaUsuario
+	audio.Bina = bina
+
+	response := new(model.AudioResponse)
+
+	http, err := s.client.CreateResource(audio, RotaAudio)
+	if err != nil {
+		return response, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.AudioResponse), err
 }
 
 // BuscaAudio - Busca uma mensagem de audio pelo seu ID
-func (s AudioService) BuscaAudio(id int) (*Audio, error) {
+func (s AudioService) BuscaAudio(id int) (*model.AudioResponse, error) {
+
 	sID := strconv.Itoa(id)
-	resp := new(Audio)
-	err := s.Client.GetResource(RotaAudio, sID, resp)
-	return resp, err
+	audio := new(model.Audio)
+	response := new(model.AudioResponse)
+
+	http, err := s.client.GetResource(audio, RotaAudio, sID)
+	if err != nil {
+		return response, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.AudioResponse), err
 }

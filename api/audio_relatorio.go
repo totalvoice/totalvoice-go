@@ -2,50 +2,30 @@ package api
 
 import (
 	"time"
-)
 
-// AudioRelatorio struct
-type AudioRelatorio struct {
-	Status   int    `json:"status"`
-	Sucesso  bool   `json:"sucesso"`
-	Motivo   int    `json:"motivo"`
-	Mensagem string `json:"mensagem"`
-	Dados    struct {
-		Relatorio []struct {
-			ID                     int    `json:"id"`
-			NumeroDestino          string `json:"numero_destino"`
-			DataCriacao            string `json:"data_criacao"`
-			DataInicio             string `json:"data_inicio"`
-			Tipo                   string `json:"tipo"`
-			Status                 string `json:"status"`
-			DuracaoSegundos        int    `json:"duracao_segundos"`
-			Duracao                string `json:"duracao"`
-			DuracaoCobradaSegundos int    `json:"duracao_cobrada_segundos"`
-			DuracaoCobrada         string `json:"duracao_cobrada"`
-			DuracaoFaladaSegundos  int    `json:"duracao_falada_segundos"`
-			DuracaoFalada          string `json:"duracao_falada"`
-			Preco                  int    `json:"preco"`
-			URLAudio               string `json:"url_audio"`
-			RespostaUsuario        bool   `json:"resposta_usuario"`
-			Resposta               string `json:"resposta"`
-		} `json:"relatorio"`
-	} `json:"dados"`
-}
+	"github.com/totalvoice/go-client/api/model"
+)
 
 // AudioRelatorioService service
 type AudioRelatorioService struct {
-	Client HTTPClient
+	client  HTTPClient
+	handler Response
 }
 
 // Gerar - Relatório de mensagens de Audio
-func (s AudioRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*AudioRelatorio, error) {
+func (s AudioRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.AudioRelatorioResponse, error) {
 
+	relatorio := new(model.AudioRelatorio)
 	params := map[string]string{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}
 
-	resp := new(AudioRelatorio)
-	err := s.Client.ListResource(RotaAudio+"/relatorio", resp, params)
-	return resp, err
+	response := new(model.AudioRelatorioResponse)
+	http, err := s.client.ListResource(relatorio, RotaAudio+"/relatorio", params)
+	if err != nil {
+		return response, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.AudioRelatorioResponse), err
 }
