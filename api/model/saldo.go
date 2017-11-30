@@ -7,6 +7,6 @@ type Saldo struct {
 	Motivo   int    `json:"motivo"`
 	Mensagem string `json:"mensagem"`
 	Dados    struct {
-		Saldo int `json:"saldo"`
+		Saldo float64 `json:"saldo"`
 	} `json:"dados"`
 }

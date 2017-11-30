@@ -24,7 +24,7 @@ func (s AudioRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time)
 	response := new(model.AudioRelatorioResponse)
 	http, err := s.client.ListResource(relatorio, RotaAudio+"/relatorio", params)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.AudioRelatorioResponse), err
