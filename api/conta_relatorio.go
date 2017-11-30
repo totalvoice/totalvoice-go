@@ -16,7 +16,7 @@ func (s ContaRelatorioService) Gerar() (*model.ContaRelatorioResponse, error) {
 
 	http, err := s.client.ListResource(relatorio, RotaConta+"/relatorio", nil)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.ContaRelatorioResponse), err

@@ -42,7 +42,7 @@ func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario boo
 
 	http, err := s.client.CreateResource(audio, RotaAudio)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.AudioResponse), err
@@ -57,7 +57,7 @@ func (s AudioService) BuscaAudio(id int) (*model.AudioResponse, error) {
 
 	http, err := s.client.GetResource(audio, RotaAudio, sID)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.AudioResponse), err

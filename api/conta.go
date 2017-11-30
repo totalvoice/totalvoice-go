@@ -35,7 +35,7 @@ func (s ContaService) Criar(conta model.Conta) (*model.ContaResponse, error) {
 	response := new(model.ContaResponse)
 	http, err := s.client.CreateResource(conta, RotaConta)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.ContaResponse), err
@@ -50,7 +50,7 @@ func (s ContaService) BuscaConta(id int) (*model.ContaResponse, error) {
 
 	http, err := s.client.GetResource(conta, RotaConta, sID)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.ContaResponse), err
@@ -64,7 +64,7 @@ func (s ContaService) Excluir(id int) (*model.ContaResponse, error) {
 
 	http, err := s.client.DeleteResource(RotaConta, sID)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.ContaResponse), err
@@ -78,7 +78,7 @@ func (s ContaService) Atualizar(conta model.Conta) (*model.ContaResponse, error)
 
 	http, err := s.client.UpdateResource(conta, RotaConta, sID)
 	if err != nil {
-		return response, err
+		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.ContaResponse), err
