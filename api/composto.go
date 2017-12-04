@@ -10,6 +10,8 @@ import (
 type CompostoService struct {
 	client  HTTPClient
 	handler Response
+
+	Relatorio *CompostoRelatorioService
 }
 
 // NewCompostoService -
@@ -18,6 +20,10 @@ func NewCompostoService(httpClient HTTPClient, handler Response) *CompostoServic
 	service := &CompostoService{
 		client:  httpClient,
 		handler: handler,
+		Relatorio: &CompostoRelatorioService{
+			client:  httpClient,
+			handler: handler,
+		},
 	}
 
 	return service
