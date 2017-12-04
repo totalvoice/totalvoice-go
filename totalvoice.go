@@ -19,6 +19,7 @@ type TotalVoice struct {
 	Saldo    *api.SaldoService
 	Conta    *api.ContaService
 	Composto *api.CompostoService
+	Chamada  *api.ChamadaService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -35,6 +36,7 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce.Saldo = api.NewSaldoService(client, handler)
 	tvce.Conta = api.NewContaService(client, handler)
 	tvce.Composto = api.NewCompostoService(client, handler)
+	tvce.Chamada = api.NewChamadaService(client, handler)
 
 	return tvce
 }
