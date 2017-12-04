@@ -30,15 +30,15 @@ func NewCompostoService(httpClient HTTPClient, handler Response) *CompostoServic
 }
 
 // Enviar - Envia uma mensagem de audio
-func (s CompostoService) Enviar(composto model.Composto) (*model.CompostoResponse, error) {
+func (s CompostoService) Enviar(composto model.Composto) (*model.TotalVoiceResponse, error) {
 
-	resp := new(model.CompostoResponse)
+	resp := new(model.TotalVoiceResponse)
 	http, err := s.client.CreateResource(composto, RotaComposto)
 	if err != nil {
 		return nil, err
 	}
 	res := s.handler.HandleResponse(resp, http)
-	return res.(*model.CompostoResponse), err
+	return res.(*model.TotalVoiceResponse), err
 }
 
 // BuscaComposto - Busca uma mensagem composta pelo seu ID

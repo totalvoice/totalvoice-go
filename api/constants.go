@@ -13,4 +13,6 @@ const (
 	RotaSaldo = "/saldo"
 	// RotaComposto - rota para composto
 	RotaComposto = "/composto"
+	// RotaChamada - rota para chamadas
+	RotaChamada = "/chamada"
 )

@@ -30,7 +30,7 @@ func NewAudioService(httpClient HTTPClient, handler Response) *AudioService {
 }
 
 // Enviar - Envia uma mensagem de audio
-func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string) (*model.AudioResponse, error) {
+func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string) (*model.TotalVoiceResponse, error) {
 
 	audio := new(model.Audio)
 	audio.NumeroDestino = numero
@@ -38,14 +38,14 @@ func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario boo
 	audio.RespostaUsuario = respostaUsuario
 	audio.Bina = bina
 
-	response := new(model.AudioResponse)
+	response := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(audio, RotaAudio)
 	if err != nil {
 		return nil, err
 	}
 	res := s.handler.HandleResponse(response, http)
-	return res.(*model.AudioResponse), err
+	return res.(*model.TotalVoiceResponse), err
 }
 
 // BuscaAudio - Busca uma mensagem de audio pelo seu ID
