@@ -14,7 +14,7 @@ type CompostoService struct {
 	Relatorio *CompostoRelatorioService
 }
 
-// NewCompostoService -
+// NewCompostoService - Serviço para mensagens Compostas
 func NewCompostoService(httpClient HTTPClient, handler Response) *CompostoService {
 
 	service := &CompostoService{

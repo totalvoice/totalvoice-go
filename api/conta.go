@@ -14,7 +14,7 @@ type ContaService struct {
 	Relatorio *ContaRelatorioService
 }
 
-// NewContaService -
+// NewContaService - Serviço para o gerenciamento de Contas
 func NewContaService(httpClient HTTPClient, handler Response) *ContaService {
 
 	service := &ContaService{

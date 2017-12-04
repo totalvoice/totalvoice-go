@@ -10,7 +10,7 @@ type PerfilService struct {
 	handler Response
 }
 
-// NewPerfilService -
+// NewPerfilService - Serviço para o gerenciamento da Conta Perfil
 func NewPerfilService(httpClient HTTPClient, handler Response) *PerfilService {
 
 	service := &PerfilService{

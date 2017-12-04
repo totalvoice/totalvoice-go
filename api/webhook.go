@@ -8,7 +8,7 @@ type WebhookService struct {
 	handler Response
 }
 
-// NewWebhookService -
+// NewWebhookService - Serviço para o gerenciamento de Webhooks
 func NewWebhookService(httpClient HTTPClient, handler Response) *WebhookService {
 
 	service := &WebhookService{

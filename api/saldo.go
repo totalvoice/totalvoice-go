@@ -8,7 +8,7 @@ type SaldoService struct {
 	handler Response
 }
 
-// NewSaldoService -
+// NewSaldoService - Serviço para a consulta de Saldo
 func NewSaldoService(httpClient HTTPClient, handler Response) *SaldoService {
 
 	service := &SaldoService{

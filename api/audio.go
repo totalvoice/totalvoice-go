@@ -14,7 +14,7 @@ type AudioService struct {
 	Relatorio *AudioRelatorioService
 }
 
-// NewAudioService -
+// NewAudioService - Serviço para o envio de Audio
 func NewAudioService(httpClient HTTPClient, handler Response) *AudioService {
 
 	service := &AudioService{
