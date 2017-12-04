@@ -10,29 +10,35 @@ import (
 type CompostoService struct {
 	client  HTTPClient
 	handler Response
+
+	Relatorio *CompostoRelatorioService
 }
 
-// NewCompostoService -
+// NewCompostoService - Serviço para mensagens Compostas
 func NewCompostoService(httpClient HTTPClient, handler Response) *CompostoService {
 
 	service := &CompostoService{
 		client:  httpClient,
 		handler: handler,
+		Relatorio: &CompostoRelatorioService{
+			client:  httpClient,
+			handler: handler,
+		},
 	}
 
 	return service
 }
 
 // Enviar - Envia uma mensagem de audio
-func (s CompostoService) Enviar(composto model.Composto) (*model.CompostoResponse, error) {
+func (s CompostoService) Enviar(composto model.Composto) (*model.TotalVoiceResponse, error) {
 
-	resp := new(model.CompostoResponse)
+	resp := new(model.TotalVoiceResponse)
 	http, err := s.client.CreateResource(composto, RotaComposto)
 	if err != nil {
 		return nil, err
 	}
 	res := s.handler.HandleResponse(resp, http)
-	return res.(*model.CompostoResponse), err
+	return res.(*model.TotalVoiceResponse), err
 }
 
 // BuscaComposto - Busca uma mensagem composta pelo seu ID

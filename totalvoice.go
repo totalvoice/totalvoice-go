@@ -13,12 +13,12 @@ const (
 type TotalVoice struct {
 	client api.HTTPClient
 
-	Perfil  *api.PerfilService
-	Audio   *api.AudioService
-	Webhook *api.WebhookService
-	Saldo   *api.SaldoService
-	Conta   *api.ContaService
-	//Composto *api.CompostoService
+	Perfil   *api.PerfilService
+	Audio    *api.AudioService
+	Webhook  *api.WebhookService
+	Saldo    *api.SaldoService
+	Conta    *api.ContaService
+	Composto *api.CompostoService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -33,10 +33,8 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce.Audio = api.NewAudioService(client, handler)
 	tvce.Webhook = api.NewWebhookService(client, handler)
 	tvce.Saldo = api.NewSaldoService(client, handler)
-
 	tvce.Conta = api.NewContaService(client, handler)
-
-	//tvce.Composto = &api.CompostoService{Client: c}
+	tvce.Composto = api.NewCompostoService(client, handler)
 
 	return tvce
 }
