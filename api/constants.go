@@ -17,4 +17,6 @@ const (
 	RotaComposto = "/composto"
 	// RotaChamada - rota para chamadas
 	RotaChamada = "/chamada"
+	// RotaConferencia - rota para conferencias
+	RotaConferencia = "/conferencia"
 )
