@@ -108,3 +108,57 @@ func (s ChamadaService) DownloadGravacao(id int) (*model.TotalVoiceResponse, err
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.TotalVoiceResponse), err
 }
+
+// Escutar - Escuta uma chamada ativa
+func (s ChamadaService) Escutar(id int, numero string, modo int) (*model.TotalVoiceResponse, error) {
+
+	sID := strconv.Itoa(id)
+	escuta := new(model.Escuta)
+	escuta.Numero = numero
+	escuta.Modo = modo
+
+	response := new(model.TotalVoiceResponse)
+
+	http, err := s.client.CreateResource(escuta, RotaChamada+"/"+sID+"/escuta")
+	if err != nil {
+		return nil, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.TotalVoiceResponse), err
+}
+
+// Transferir - Faz uma transferência da chamada atual
+func (s ChamadaService) Transferir(id int, numero string, perna string) (*model.TotalVoiceResponse, error) {
+
+	sID := strconv.Itoa(id)
+	transfer := new(model.Transferencia)
+	transfer.Numero = numero
+	transfer.Perna = perna
+
+	response := new(model.TotalVoiceResponse)
+
+	http, err := s.client.CreateResource(transfer, RotaChamada+"/"+sID+"/transfer")
+	if err != nil {
+		return nil, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.TotalVoiceResponse), err
+}
+
+// Avaliar - Faz uma transferência da chamada atual
+func (s ChamadaService) Avaliar(id int, nota string, comentario string) (*model.TotalVoiceResponse, error) {
+
+	sID := strconv.Itoa(id)
+	avaliacao := new(model.Avaliacao)
+	avaliacao.Nota = nota
+	avaliacao.Comentario = comentario
+
+	response := new(model.TotalVoiceResponse)
+
+	http, err := s.client.CreateResource(avaliacao, RotaChamada+"/"+sID+"/avaliar")
+	if err != nil {
+		return nil, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.TotalVoiceResponse), err
+}
