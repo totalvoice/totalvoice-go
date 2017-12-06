@@ -52,7 +52,6 @@ func (s ChamadaService) Criar(numeroOrigem string, numeroDestino string, opcoes 
 		case "tags":
 			chamada.Tags = value
 		}
-
 	}
 
 	response := new(model.TotalVoiceResponse)
