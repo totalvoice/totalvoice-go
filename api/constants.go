@@ -23,4 +23,6 @@ const (
 	RotaSMS = "/sms"
 	// RotaTTS - rota para TTS
 	RotaTTS = "/tts"
+	// RotaRamal - rota para ramais
+	RotaRamal = "/ramal"
 )
