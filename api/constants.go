@@ -25,4 +25,10 @@ const (
 	RotaTTS = "/tts"
 	// RotaRamal - rota para ramais
 	RotaRamal = "/ramal"
+	// RotaURA - rota para URAs
+	RotaURA = "/ura"
+	// RotaWebphone - rota para Webphone
+	RotaWebphone = "/webphone"
+	// RotaDID - rota para DIDs
+	RotaDID = "/did"
 )
