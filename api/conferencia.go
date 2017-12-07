@@ -39,8 +39,8 @@ func (s ConferenciaService) Criar() (*model.TotalVoiceResponse, error) {
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaChamada - Busca uma chamada pelo seu ID
-func (s ConferenciaService) BuscaChamada(id int) (*model.ChamadaResponse, error) {
+// Buscar - Busca uma chamada pelo seu ID
+func (s ConferenciaService) Buscar(id int) (*model.ChamadaResponse, error) {
 
 	sID := strconv.Itoa(id)
 	conf := new(model.Conferencia)

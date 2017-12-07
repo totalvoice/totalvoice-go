@@ -19,4 +19,10 @@ const (
 	RotaChamada = "/chamada"
 	// RotaConferencia - rota para conferencias
 	RotaConferencia = "/conferencia"
+	// RotaSMS - rota para SMS
+	RotaSMS = "/sms"
+	// RotaTTS - rota para TTS
+	RotaTTS = "/tts"
+	// RotaRamal - rota para ramais
+	RotaRamal = "/ramal"
 )

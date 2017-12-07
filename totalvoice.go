@@ -21,6 +21,8 @@ type TotalVoice struct {
 	Composto    *api.CompostoService
 	Chamada     *api.ChamadaService
 	Conferencia *api.ConferenciaService
+	SMS         *api.SMSService
+	TTS         *api.TTSService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -39,6 +41,8 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce.Composto = api.NewCompostoService(client, handler)
 	tvce.Chamada = api.NewChamadaService(client, handler)
 	tvce.Conferencia = api.NewConferenciaService(client, handler)
+	tvce.SMS = api.NewSMSService(client, handler)
+	tvce.TTS = api.NewTTSService(client, handler)
 
 	return tvce
 }

@@ -52,7 +52,6 @@ func (s ChamadaService) Criar(numeroOrigem string, numeroDestino string, opcoes 
 		case "tags":
 			chamada.Tags = value
 		}
-
 	}
 
 	response := new(model.TotalVoiceResponse)
@@ -65,8 +64,8 @@ func (s ChamadaService) Criar(numeroOrigem string, numeroDestino string, opcoes 
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaChamada - Busca uma Chamada pelo seu ID
-func (s ChamadaService) BuscaChamada(id int) (*model.ChamadaResponse, error) {
+// Buscar - Busca uma Chamada pelo seu ID
+func (s ChamadaService) Buscar(id int) (*model.ChamadaResponse, error) {
 
 	sID := strconv.Itoa(id)
 	chamada := new(model.Chamada)
