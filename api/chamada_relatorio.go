@@ -16,7 +16,7 @@ type ChamadaRelatorioService struct {
 func (s ChamadaRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.ChamadaRelatorioResponse, error) {
 
 	relatorio := new(model.ChamadaRelatorio)
-	params := map[string]string{
+	params := map[string]interface{}{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}

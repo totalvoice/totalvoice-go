@@ -16,7 +16,7 @@ type CompostoRelatorioService struct {
 func (s CompostoRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.CompostoRelatorioResponse, error) {
 
 	relatorio := new(model.CompostoRelatorio)
-	params := map[string]string{
+	params := map[string]interface{}{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}

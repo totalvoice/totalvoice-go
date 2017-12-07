@@ -25,6 +25,7 @@ type TotalVoice struct {
 	TTS         *api.TTSService
 	Ramal       *api.RamalService
 	URA         *api.URAService
+	DID         *api.DIDService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -47,6 +48,7 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce.TTS = api.NewTTSService(client, handler)
 	tvce.Ramal = api.NewRamalService(client, handler)
 	tvce.URA = api.NewURAService(client, handler)
+	tvce.DID = api.NewDIDService(client, handler)
 
 	return tvce
 }

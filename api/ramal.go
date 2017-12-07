@@ -82,3 +82,17 @@ func (s RamalService) Excluir(id int) (*model.TotalVoiceResponse, error) {
 	res := s.handler.HandleResponse(response, http)
 	return res.(*model.TotalVoiceResponse), err
 }
+
+// Webphone - Requisita a URL do Webphone de um ramal
+func (s RamalService) Webphone(params map[string]interface{}) (*model.WebphoneResponse, error) {
+
+	webphone := new(model.Webphone)
+	response := new(model.WebphoneResponse)
+
+	http, err := s.client.ListResource(webphone, RotaWebphone, params)
+	if err != nil {
+		return nil, err
+	}
+	res := s.handler.HandleResponse(response, http)
+	return res.(*model.WebphoneResponse), err
+}
