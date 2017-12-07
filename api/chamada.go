@@ -79,8 +79,8 @@ func (s ChamadaService) Buscar(id int) (*model.ChamadaResponse, error) {
 	return res.(*model.ChamadaResponse), err
 }
 
-// Excluir - Remove uma Conta
-func (s ChamadaService) Excluir(id int) (*model.TotalVoiceResponse, error) {
+// Encerrar - Encerra uma chamada ativa
+func (s ChamadaService) Encerrar(id int) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(id)
 	response := new(model.TotalVoiceResponse)
