@@ -41,8 +41,8 @@ func (s ContaService) Criar(conta model.Conta) (*model.ContaResponse, error) {
 	return res.(*model.ContaResponse), err
 }
 
-// BuscaConta - Leitura dos dados de uma conta criada
-func (s ContaService) BuscaConta(id int) (*model.ContaResponse, error) {
+// Buscar - Leitura dos dados de uma conta criada
+func (s ContaService) Buscar(id int) (*model.ContaResponse, error) {
 
 	sID := strconv.Itoa(id)
 	conta := new(model.Conta)

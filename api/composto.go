@@ -41,8 +41,8 @@ func (s CompostoService) Enviar(composto model.Composto) (*model.TotalVoiceRespo
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaComposto - Busca uma mensagem composta pelo seu ID
-func (s CompostoService) BuscaComposto(id int) (*model.CompostoResponse, error) {
+// Buscar - Busca uma mensagem composta pelo seu ID
+func (s CompostoService) Buscar(id int) (*model.CompostoResponse, error) {
 
 	sID := strconv.Itoa(id)
 	composto := new(model.Composto)

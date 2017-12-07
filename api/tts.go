@@ -61,8 +61,8 @@ func (s TTSService) Enviar(numero string, mensagem string, opcoes map[string]str
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaTTS - Busca uma mensagem de TTS pelo seu ID
-func (s TTSService) BuscaTTS(id int) (*model.TTSResponse, error) {
+// Buscar - Busca uma mensagem de TTS pelo seu ID
+func (s TTSService) Buscar(id int) (*model.TTSResponse, error) {
 
 	sID := strconv.Itoa(id)
 	TTS := new(model.TTS)

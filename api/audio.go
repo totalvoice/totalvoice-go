@@ -48,8 +48,8 @@ func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario boo
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaAudio - Busca uma mensagem de audio pelo seu ID
-func (s AudioService) BuscaAudio(id int) (*model.AudioResponse, error) {
+// Buscar - Busca uma mensagem de audio pelo seu ID
+func (s AudioService) Buscar(id int) (*model.AudioResponse, error) {
 
 	sID := strconv.Itoa(id)
 	audio := new(model.Audio)

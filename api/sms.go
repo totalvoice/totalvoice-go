@@ -48,8 +48,8 @@ func (s SMSService) Enviar(numero string, mensagem string, respostaUsuario bool,
 	return res.(*model.TotalVoiceResponse), err
 }
 
-// BuscaSMS - Busca uma mensagem de SMS pelo seu ID
-func (s SMSService) BuscaSMS(id int) (*model.SMSResponse, error) {
+// Buscar - Busca uma mensagem de SMS pelo seu ID
+func (s SMSService) Buscar(id int) (*model.SMSResponse, error) {
 
 	sID := strconv.Itoa(id)
 	SMS := new(model.SMS)
