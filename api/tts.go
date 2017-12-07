@@ -30,7 +30,7 @@ func NewTTSService(httpClient HTTPClient, handler Response) *TTSService {
 }
 
 // Enviar - Envia uma mensagem de TTS
-func (s TTSService) Enviar(numero string, mensagem string, opcoes map[string]string) (*model.TotalVoiceResponse, error) {
+func (s TTSService) Enviar(numero string, mensagem string, opcoes map[string]interface{}) (*model.TotalVoiceResponse, error) {
 
 	tts := new(model.TTS)
 	tts.NumeroDestino = numero
@@ -39,15 +39,13 @@ func (s TTSService) Enviar(numero string, mensagem string, opcoes map[string]str
 	for index, value := range opcoes {
 		switch index {
 		case "velocidade":
-			i, _ := strconv.Atoi(value)
-			tts.Velocidade = i
+			tts.Velocidade = value.(int)
 		case "resposta_usuario":
-			b, _ := strconv.ParseBool(value)
-			tts.RespostaUsuario = b
+			tts.RespostaUsuario = value.(bool)
 		case "tipo_voz":
-			tts.TipoVoz = value
+			tts.TipoVoz = value.(string)
 		case "bina":
-			tts.Bina = value
+			tts.Bina = value.(string)
 		}
 	}
 
