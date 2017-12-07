@@ -16,7 +16,7 @@ type TTSRelatorioService struct {
 func (s TTSRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.TTSRelatorioResponse, error) {
 
 	relatorio := new(model.TTSRelatorio)
-	params := map[string]string{
+	params := map[string]interface{}{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}

@@ -24,7 +24,7 @@ func (c *Client) GetResource(model api.Model, path string, sid interface{}) (*ht
 }
 
 // ListResource - HTTP GET
-func (c *Client) ListResource(model api.Model, path string, params map[string]string) (*http.Response, error) {
+func (c *Client) ListResource(model api.Model, path string, params map[string]interface{}) (*http.Response, error) {
 	return c.makeRequest("GET", model, path, params)
 }
 
@@ -46,7 +46,7 @@ func (c *Client) DeleteResource(path string, sid interface{}) (*http.Response, e
 }
 
 // makeRequest Make a request to the Twilio API.
-func (c *Client) makeRequest(method string, model api.Model, path string, params map[string]string) (*http.Response, error) {
+func (c *Client) makeRequest(method string, model api.Model, path string, params map[string]interface{}) (*http.Response, error) {
 
 	uri := c.buildURI(path)
 	client := c.client
@@ -94,10 +94,10 @@ func (c *Client) buildURI(path string) string {
 }
 
 // buildQueryString
-func (c *Client) buildQueryString(values map[string]string) string {
+func (c *Client) buildQueryString(values map[string]interface{}) string {
 	params := url.Values{}
 	for i, v := range values {
-		params.Add(i, v)
+		params.Add(i, v.(string))
 	}
 	return params.Encode()
 }

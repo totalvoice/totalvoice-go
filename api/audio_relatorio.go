@@ -16,7 +16,7 @@ type AudioRelatorioService struct {
 func (s AudioRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.AudioRelatorioResponse, error) {
 
 	relatorio := new(model.AudioRelatorio)
-	params := map[string]string{
+	params := map[string]interface{}{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}

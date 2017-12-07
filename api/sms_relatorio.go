@@ -16,7 +16,7 @@ type SMSRelatorioService struct {
 func (s SMSRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (*model.SMSRelatorioResponse, error) {
 
 	relatorio := new(model.SMSRelatorio)
-	params := map[string]string{
+	params := map[string]interface{}{
 		"data_inicio": dataInicial.UTC().Format(DateFormat),
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}
