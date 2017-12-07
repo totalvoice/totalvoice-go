@@ -12,7 +12,7 @@ type Composto struct {
 	Tags   string `json:"tags"`
 }
 
-// AddAcao -
+// AddAcao - Adiciona uma ação no JSON
 func (comp *Composto) AddAcao(acao Acao) []Acao {
 	comp.Dados = append(comp.Dados, acao)
 	return comp.Dados
