@@ -142,6 +142,32 @@ func main() {
 }
 ```
 
+> ##### Relatório de SMS
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+	client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+	di := time.Date(2017, time.December, 06, 00, 20, 0, 0, time.Local)
+	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
+	response, err := client.SMS.Relatorio.Gerar(di, df)
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
 > ##### Envio de TTS
 
 
@@ -189,6 +215,32 @@ func main() {
         "bina": "4811111111",
 	}
     response, err := client.TTS.Enviar("4811111111", "Minha mensagem TTS", opcoes)
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
+> ##### Relatório de TTS
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+	client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+	di := time.Date(2017, time.December, 06, 00, 20, 0, 0, time.Local)
+	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
+	response, err := client.TTS.Relatorio.Gerar(di, df)
     
     if err != nil {
 		panic(err)
