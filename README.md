@@ -327,6 +327,30 @@ func main() {
 }
 ```
 
+> ##### Visualizando os dados da Minha Conta
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+    client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+    response, err := client.Perfil.MinhaConta()
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
 > ##### Consulta saldo da Minha Conta
 
 ```go
@@ -342,6 +366,53 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("{{access-token}}")
     response, err := client.Saldo.ConsultaSaldo()
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+> ##### Gerar URL de Recarga
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+    client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+    response, err := client.Perfil.GeraURLRecarga()
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
+> ##### Relatório de Recarga
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+    client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+    response, err := client.Perfil.RelatorioRecarga()
     
     if err != nil {
 		panic(err)
