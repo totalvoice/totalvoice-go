@@ -422,6 +422,54 @@ func main() {
 }
 ```
 
+> ##### Listando DIDs no estoque
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+    client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+    response, err := client.DID.Estoque()
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
+> ##### Adquirindo um DID
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+    client := totalvoice.NewTotalVoiceClient("{{access-token}}")
+    response, err := client.DID.Adquirir(123) // ID do DID
+    
+    if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
 > ##### Caso você necessite utilizar seu próprio endereço configurado na Total Voice
 
 ```go
