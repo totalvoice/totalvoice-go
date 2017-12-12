@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/totalvoice/go-client/api"
@@ -97,7 +98,16 @@ func (c *Client) buildURI(path string) string {
 func (c *Client) buildQueryString(values map[string]interface{}) string {
 	params := url.Values{}
 	for i, v := range values {
-		params.Add(i, v.(string))
+		switch v.(type) {
+		case int:
+			si := strconv.Itoa(v.(int))
+			params.Add(i, si)
+		case bool:
+			sb := strconv.FormatBool(v.(bool))
+			params.Add(i, sb)
+		default:
+			params.Add(i, v.(string))
+		}
 	}
 	return params.Encode()
 }
