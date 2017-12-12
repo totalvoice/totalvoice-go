@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/totalvoice/go-client/api/model"
+	"github.com/totalvoice/totalvoice-go/api/model"
 )
 
 // PerfilService service

@@ -3,7 +3,7 @@ package api
 import (
 	"strconv"
 
-	"github.com/totalvoice/go-client/api/model"
+	"github.com/totalvoice/totalvoice-go/api/model"
 )
 
 // CompostoService service

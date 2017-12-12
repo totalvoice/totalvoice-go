@@ -3,7 +3,7 @@ package api
 import (
 	"time"
 
-	"github.com/totalvoice/go-client/api/model"
+	"github.com/totalvoice/totalvoice-go/api/model"
 )
 
 // AudioRelatorioService service

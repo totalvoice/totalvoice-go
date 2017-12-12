@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/totalvoice/go-client/api"
+	"github.com/totalvoice/totalvoice-go/api"
 )
 
 // Client struct
