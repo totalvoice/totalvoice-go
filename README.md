@@ -1,6 +1,8 @@
 # totalvoice-go
 Cliente em Golang para consumo da API da TotalVoice
 
+[![Build Status](https://travis-ci.org/totalvoice/totalvoice-go.svg?branch=master&style=flat-square)](https://travis-ci.org/totalvoice/totalvoice-go)
+
 > ### Funcionalidades
 
 - Gerenciamento das chamadas
