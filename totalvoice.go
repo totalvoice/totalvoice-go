@@ -31,7 +31,14 @@ type TotalVoice struct {
 // NewTotalVoiceClient - Cria TotalVoice struct.
 func NewTotalVoiceClient(accessToken string) *TotalVoice {
 
-	client := &Client{accessToken: accessToken, baseURI: BaseURI}
+	client := NewClient(accessToken, BaseURI)
+	return client
+}
+
+// NewClient - Cria TotalVoice struct.
+func NewClient(accessToken string, baseURI string) *TotalVoice {
+
+	client := &Client{accessToken: accessToken, baseURI: baseURI}
 	tvce := &TotalVoice{client: client}
 
 	handler := api.Response{}
@@ -49,15 +56,6 @@ func NewTotalVoiceClient(accessToken string) *TotalVoice {
 	tvce.Ramal = api.NewRamalService(client, handler)
 	tvce.URA = api.NewURAService(client, handler)
 	tvce.DID = api.NewDIDService(client, handler)
-
-	return tvce
-}
-
-// NewClient - Cria TotalVoice struct.
-func NewClient(accessToken string, baseURI string) *TotalVoice {
-
-	tvce := NewTotalVoiceClient(accessToken)
-	tvce.client.SetBaseURI(baseURI)
 
 	return tvce
 }
