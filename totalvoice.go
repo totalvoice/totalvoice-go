@@ -1,7 +1,7 @@
 package totalvoice
 
 import (
-	"github.com/totalvoice/go-client/api"
+	"github.com/totalvoice/totalvoice-go/api"
 )
 
 // BaseURI - URI Base

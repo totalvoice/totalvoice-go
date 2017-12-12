@@ -1,6 +1,6 @@
 package api
 
-import "github.com/totalvoice/go-client/api/model"
+import "github.com/totalvoice/totalvoice-go/api/model"
 
 // SaldoService service
 type SaldoService struct {
