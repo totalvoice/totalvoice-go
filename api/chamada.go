@@ -9,21 +9,21 @@ import (
 
 // ChamadaService service
 type ChamadaService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *ChamadaRelatorioService
 }
 
 // NewChamadaService - Serviço para o envio de Chamada
-func NewChamadaService(httpClient HTTPClient, handler Response) *ChamadaService {
+func NewChamadaService(httpClient HTTPClient, response Response) *ChamadaService {
 
 	service := &ChamadaService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 		Relatorio: &ChamadaRelatorioService{
-			client:  httpClient,
-			handler: handler,
+			client:   httpClient,
+			response: response,
 		},
 	}
 
@@ -54,13 +54,13 @@ func (s ChamadaService) Criar(numeroOrigem string, numeroDestino string, opcoes 
 		}
 	}
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(chamada, RotaChamada)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -69,13 +69,13 @@ func (s ChamadaService) Buscar(id int) (*model.ChamadaResponse, error) {
 
 	sID := strconv.Itoa(id)
 	chamada := new(model.Chamada)
-	response := new(model.ChamadaResponse)
+	resp := new(model.ChamadaResponse)
 
 	http, err := s.client.GetResource(chamada, RotaChamada, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.ChamadaResponse), err
 }
 
@@ -83,13 +83,13 @@ func (s ChamadaService) Buscar(id int) (*model.ChamadaResponse, error) {
 func (s ChamadaService) Encerrar(id int) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(id)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.DeleteResource(RotaChamada, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -98,13 +98,13 @@ func (s ChamadaService) DownloadGravacao(id int) (*model.TotalVoiceResponse, err
 
 	sID := strconv.Itoa(id)
 	chamada := new(model.Chamada)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.GetResource(chamada, RotaChamada+"/"+sID+"/gravacao", nil)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -116,13 +116,13 @@ func (s ChamadaService) Escutar(id int, numero string, modo int) (*model.TotalVo
 	escuta.Numero = numero
 	escuta.Modo = modo
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(escuta, RotaChamada+"/"+sID+"/escuta")
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -134,13 +134,13 @@ func (s ChamadaService) Transferir(id int, numero string, perna string) (*model.
 	transfer.Numero = numero
 	transfer.Perna = perna
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(transfer, RotaChamada+"/"+sID+"/transfer")
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -152,12 +152,12 @@ func (s ChamadaService) Avaliar(id int, nota string, comentario string) (*model.
 	avaliacao.Nota = nota
 	avaliacao.Comentario = comentario
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(avaliacao, RotaChamada+"/"+sID+"/avaliar")
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }

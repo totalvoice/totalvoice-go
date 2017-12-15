@@ -8,8 +8,8 @@ import (
 
 // ChamadaRelatorioService service
 type ChamadaRelatorioService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // Gerar - Relatório de mensagens de Audio
@@ -26,6 +26,6 @@ func (s ChamadaRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Tim
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(response, http)
 	return res.(*model.ChamadaRelatorioResponse), err
 }

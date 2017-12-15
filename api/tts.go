@@ -8,21 +8,21 @@ import (
 
 // TTSService service
 type TTSService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *TTSRelatorioService
 }
 
 // NewTTSService - Serviço para o envio de TTS
-func NewTTSService(httpClient HTTPClient, handler Response) *TTSService {
+func NewTTSService(httpClient HTTPClient, response Response) *TTSService {
 
 	service := &TTSService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 		Relatorio: &TTSRelatorioService{
-			client:  httpClient,
-			handler: handler,
+			client:   httpClient,
+			response: response,
 		},
 	}
 
@@ -49,13 +49,13 @@ func (s TTSService) Enviar(numero string, mensagem string, opcoes map[string]int
 		}
 	}
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(tts, RotaTTS)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -64,12 +64,12 @@ func (s TTSService) Buscar(id int) (*model.TTSResponse, error) {
 
 	sID := strconv.Itoa(id)
 	TTS := new(model.TTS)
-	response := new(model.TTSResponse)
+	resp := new(model.TTSResponse)
 
 	http, err := s.client.GetResource(TTS, RotaTTS, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TTSResponse), err
 }

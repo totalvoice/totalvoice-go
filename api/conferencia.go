@@ -8,18 +8,18 @@ import (
 
 // ConferenciaService service
 type ConferenciaService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *AudioRelatorioService
 }
 
 // NewConferenciaService - Serviço para realizar conferências
-func NewConferenciaService(httpClient HTTPClient, handler Response) *ConferenciaService {
+func NewConferenciaService(httpClient HTTPClient, response Response) *ConferenciaService {
 
 	service := &ConferenciaService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 	}
 
 	return service
@@ -29,13 +29,13 @@ func NewConferenciaService(httpClient HTTPClient, handler Response) *Conferencia
 func (s ConferenciaService) Criar() (*model.TotalVoiceResponse, error) {
 
 	conf := new(model.Conferencia)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(conf, RotaConferencia)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -44,13 +44,13 @@ func (s ConferenciaService) Buscar(id int) (*model.ChamadaResponse, error) {
 
 	sID := strconv.Itoa(id)
 	conf := new(model.Conferencia)
-	response := new(model.ChamadaResponse) // retorna os dados de uma chamada
+	resp := new(model.ChamadaResponse) // retorna os dados de uma chamada
 
 	http, err := s.client.GetResource(conf, RotaConferencia, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.ChamadaResponse), err
 }
 
@@ -63,12 +63,12 @@ func (s ConferenciaService) AddNumeroConferencia(id int, numero string, bina str
 	conf.Bina = bina
 	conf.GravarAudio = gravarAudio
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(conf, RotaConferencia+"/"+sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }

@@ -8,21 +8,21 @@ import (
 
 // AudioService service
 type AudioService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *AudioRelatorioService
 }
 
 // NewAudioService - Serviço para o envio de Audio
-func NewAudioService(httpClient HTTPClient, handler Response) *AudioService {
+func NewAudioService(httpClient HTTPClient, response Response) *AudioService {
 
 	service := &AudioService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 		Relatorio: &AudioRelatorioService{
-			client:  httpClient,
-			handler: handler,
+			client:   httpClient,
+			response: response,
 		},
 	}
 
@@ -44,7 +44,7 @@ func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario boo
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(response, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -59,6 +59,6 @@ func (s AudioService) Buscar(id int) (*model.AudioResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(response, http)
 	return res.(*model.AudioResponse), err
 }

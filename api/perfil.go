@@ -6,16 +6,16 @@ import (
 
 // PerfilService service
 type PerfilService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // NewPerfilService - Serviço para o gerenciamento da Conta Perfil
-func NewPerfilService(httpClient HTTPClient, handler Response) *PerfilService {
+func NewPerfilService(httpClient HTTPClient, response Response) *PerfilService {
 
 	service := &PerfilService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 	}
 
 	return service
@@ -29,7 +29,7 @@ func (s PerfilService) MinhaConta() (*model.Perfil, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(perfil, http)
+	res := s.response.HandleResponse(perfil, http)
 	return res.(*model.Perfil), err
 }
 
@@ -40,7 +40,7 @@ func (s PerfilService) AtualizarConta(perfil model.Perfil) (*model.Perfil, error
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(perfil, http)
+	res := s.response.HandleResponse(perfil, http)
 	return res.(*model.Perfil), err
 }
 
@@ -52,7 +52,7 @@ func (s PerfilService) RelatorioRecarga() (*model.Recarga, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(recarga, http)
+	res := s.response.HandleResponse(recarga, http)
 	return res.(*model.Recarga), err
 }
 
@@ -64,6 +64,6 @@ func (s PerfilService) GeraURLRecarga() (*model.URLRecarga, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(url, http)
+	res := s.response.HandleResponse(url, http)
 	return res.(*model.URLRecarga), err
 }

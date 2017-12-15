@@ -8,16 +8,16 @@ import (
 
 // DIDService service
 type DIDService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // NewDIDService - Serviço para o gerenciamento de Ramais
-func NewDIDService(httpClient HTTPClient, handler Response) *DIDService {
+func NewDIDService(httpClient HTTPClient, response Response) *DIDService {
 
 	service := &DIDService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 	}
 
 	return service
@@ -27,12 +27,12 @@ func NewDIDService(httpClient HTTPClient, handler Response) *DIDService {
 func (s DIDService) Atualizar(did model.DID) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(did.ID)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 	http, err := s.client.UpdateResource(did, RotaDID, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -40,13 +40,13 @@ func (s DIDService) Atualizar(did model.DID) (*model.TotalVoiceResponse, error) 
 func (s DIDService) Listar() (*model.DIDResponse, error) {
 
 	did := new(model.DID)
-	response := new(model.DIDResponse)
+	resp := new(model.DIDResponse)
 
 	http, err := s.client.ListResource(did, RotaDID, nil)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.DIDResponse), err
 }
 
@@ -54,13 +54,13 @@ func (s DIDService) Listar() (*model.DIDResponse, error) {
 func (s DIDService) Excluir(id int) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(id)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.DeleteResource(RotaDID, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -68,13 +68,13 @@ func (s DIDService) Excluir(id int) (*model.TotalVoiceResponse, error) {
 func (s DIDService) Estoque() (*model.DIDResponse, error) {
 
 	did := new(model.DID)
-	response := new(model.DIDResponse)
+	resp := new(model.DIDResponse)
 
 	http, err := s.client.ListResource(did, RotaDID+"/estoque", nil)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.DIDResponse), err
 }
 
@@ -83,12 +83,12 @@ func (s DIDService) Adquirir(id int) (*model.TotalVoiceResponse, error) {
 
 	did := new(model.DID)
 	did.DidID = strconv.Itoa(id)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(did, RotaDID+"/estoque")
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }

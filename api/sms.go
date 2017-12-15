@@ -8,21 +8,21 @@ import (
 
 // SMSService service
 type SMSService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *SMSRelatorioService
 }
 
 // NewSMSService - Serviço para o envio de SMS
-func NewSMSService(httpClient HTTPClient, handler Response) *SMSService {
+func NewSMSService(httpClient HTTPClient, response Response) *SMSService {
 
 	service := &SMSService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 		Relatorio: &SMSRelatorioService{
-			client:  httpClient,
-			handler: handler,
+			client:   httpClient,
+			response: response,
 		},
 	}
 
@@ -38,13 +38,13 @@ func (s SMSService) Enviar(numero string, mensagem string, respostaUsuario bool,
 	sms.RespostaUsuario = respostaUsuario
 	sms.MultiSMS = multiSMS
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.CreateResource(sms, RotaSMS)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -53,12 +53,12 @@ func (s SMSService) Buscar(id int) (*model.SMSResponse, error) {
 
 	sID := strconv.Itoa(id)
 	SMS := new(model.SMS)
-	response := new(model.SMSResponse)
+	resp := new(model.SMSResponse)
 
 	http, err := s.client.GetResource(SMS, RotaSMS, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.SMSResponse), err
 }

@@ -8,21 +8,21 @@ import (
 
 // CompostoService service
 type CompostoService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 
 	Relatorio *CompostoRelatorioService
 }
 
 // NewCompostoService - Serviço para mensagens Compostas
-func NewCompostoService(httpClient HTTPClient, handler Response) *CompostoService {
+func NewCompostoService(httpClient HTTPClient, response Response) *CompostoService {
 
 	service := &CompostoService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 		Relatorio: &CompostoRelatorioService{
-			client:  httpClient,
-			handler: handler,
+			client:   httpClient,
+			response: response,
 		},
 	}
 
@@ -37,7 +37,7 @@ func (s CompostoService) Enviar(composto model.Composto) (*model.TotalVoiceRespo
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(resp, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -52,6 +52,6 @@ func (s CompostoService) Buscar(id int) (*model.CompostoResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(resp, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.CompostoResponse), err
 }
