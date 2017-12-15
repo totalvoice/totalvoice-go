@@ -8,8 +8,8 @@ import (
 
 // SMSRelatorioService service
 type SMSRelatorioService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // Gerar - Relatório de mensagens de SMS
@@ -21,11 +21,11 @@ func (s SMSRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}
 
-	response := new(model.SMSRelatorioResponse)
+	resp := new(model.SMSRelatorioResponse)
 	http, err := s.client.ListResource(relatorio, RotaSMS+"/relatorio", params)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.SMSRelatorioResponse), err
 }

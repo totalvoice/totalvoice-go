@@ -8,16 +8,16 @@ import (
 
 // URAService service
 type URAService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // NewURAService - Serviço para o gerenciamento de URAs
-func NewURAService(httpClient HTTPClient, handler Response) *URAService {
+func NewURAService(httpClient HTTPClient, response Response) *URAService {
 
 	service := &URAService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 	}
 
 	return service
@@ -26,12 +26,12 @@ func NewURAService(httpClient HTTPClient, handler Response) *URAService {
 // Criar - Criar uma URA
 func (s URAService) Criar(ura model.URA) (*model.TotalVoiceResponse, error) {
 
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 	http, err := s.client.CreateResource(ura, RotaURA)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -39,12 +39,12 @@ func (s URAService) Criar(ura model.URA) (*model.TotalVoiceResponse, error) {
 func (s URAService) Atualizar(ura model.URA) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(ura.ID)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 	http, err := s.client.UpdateResource(ura, RotaURA, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
@@ -52,12 +52,12 @@ func (s URAService) Atualizar(ura model.URA) (*model.TotalVoiceResponse, error) 
 func (s URAService) Excluir(id int) (*model.TotalVoiceResponse, error) {
 
 	sID := strconv.Itoa(id)
-	response := new(model.TotalVoiceResponse)
+	resp := new(model.TotalVoiceResponse)
 
 	http, err := s.client.DeleteResource(RotaURA, sID)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }

@@ -8,8 +8,8 @@ import (
 
 // TTSRelatorioService service
 type TTSRelatorioService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // Gerar - Relatório de mensagens de TTS
@@ -21,11 +21,11 @@ func (s TTSRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Time) (
 		"data_fim":    dataFinal.UTC().Format(DateFormat),
 	}
 
-	response := new(model.TTSRelatorioResponse)
+	resp := new(model.TTSRelatorioResponse)
 	http, err := s.client.ListResource(relatorio, RotaTTS+"/relatorio", params)
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TTSRelatorioResponse), err
 }

@@ -4,16 +4,16 @@ import "github.com/totalvoice/totalvoice-go/api/model"
 
 // SaldoService service
 type SaldoService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // NewSaldoService - Serviço para a consulta de Saldo
-func NewSaldoService(httpClient HTTPClient, handler Response) *SaldoService {
+func NewSaldoService(httpClient HTTPClient, response Response) *SaldoService {
 
 	service := &SaldoService{
-		client:  httpClient,
-		handler: handler,
+		client:   httpClient,
+		response: response,
 	}
 
 	return service
@@ -27,6 +27,6 @@ func (s SaldoService) ConsultaSaldo() (*model.Saldo, error) {
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(saldo, http)
+	res := s.response.HandleResponse(saldo, http)
 	return res.(*model.Saldo), err
 }

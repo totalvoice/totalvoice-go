@@ -8,8 +8,8 @@ import (
 
 // CompostoRelatorioService service
 type CompostoRelatorioService struct {
-	client  HTTPClient
-	handler Response
+	client   HTTPClient
+	response Response
 }
 
 // Gerar - Relatório de mensagens Compostas
@@ -26,6 +26,6 @@ func (s CompostoRelatorioService) Gerar(dataInicial time.Time, dataFinal time.Ti
 	if err != nil {
 		return nil, err
 	}
-	res := s.handler.HandleResponse(response, http)
+	res := s.response.HandleResponse(response, http)
 	return res.(*model.CompostoRelatorioResponse), err
 }
