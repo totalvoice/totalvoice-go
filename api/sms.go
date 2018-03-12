@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/totalvoice/totalvoice-go/api/model"
+	"time"
 )
 
 // SMSService service
@@ -30,13 +31,19 @@ func NewSMSService(httpClient HTTPClient, response Response) *SMSService {
 }
 
 // Enviar - Envia uma mensagem de SMS
-func (s SMSService) Enviar(numero string, mensagem string, respostaUsuario bool, multiSMS bool) (*model.TotalVoiceResponse, error) {
+func (s SMSService) Enviar(numero string, mensagem string, respostaUsuario bool, multiSMS bool, dataCriacao interface{}) (*model.TotalVoiceResponse, error) {
 
 	sms := new(model.SMS)
 	sms.NumeroDestino = numero
 	sms.Mensagem = mensagem
 	sms.RespostaUsuario = respostaUsuario
 	sms.MultiSMS = multiSMS
+
+	if dataCriacao != nil {
+
+		data := dataCriacao.(time.Time)
+		sms.DataCriacao = data.UTC().Format(DateFormat)
+	}
 
 	resp := new(model.TotalVoiceResponse)
 

@@ -4,10 +4,11 @@ import "time"
 
 // SMS model
 type SMS struct {
-	NumeroDestino   string `json:"numero_destino"`
-	Mensagem        string `json:"mensagem"`
-	RespostaUsuario bool   `json:"resposta_usuario"`
-	MultiSMS        bool   `json:"multi_sms"`
+	NumeroDestino   string      `json:"numero_destino"`
+	Mensagem        string      `json:"mensagem"`
+	RespostaUsuario bool        `json:"resposta_usuario"`
+	MultiSMS        bool        `json:"multi_sms"`
+	DataCriacao     interface{} `json:"data_criacao"`
 }
 
 // SMSResponse struct
