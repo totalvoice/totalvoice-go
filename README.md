@@ -134,7 +134,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("{{access-token}}")
-    response, err := client.SMS.Enviar("4811111111", "Minha mensagem SMS", false, false)
+    response, err := client.SMS.Enviar("4811111111", "Minha mensagem SMS", false, false, nil)
     
     if err != nil {
 		panic(err)
