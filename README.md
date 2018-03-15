@@ -267,7 +267,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("{{access-token}}")
-    response, err := client.Audio.Enviar("4811111111", "http://foooo.bar/audio.mp3", false, "4811111111")
+    response, err := client.Audio.Enviar("4811111111", "http://foooo.bar/audio.mp3", false, "4811111111", false)
     
     if err != nil {
 		panic(err)

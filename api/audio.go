@@ -30,13 +30,14 @@ func NewAudioService(httpClient HTTPClient, response Response) *AudioService {
 }
 
 // Enviar - Envia uma mensagem de audio
-func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string) (*model.TotalVoiceResponse, error) {
+func (s AudioService) Enviar(numero string, urlAudio string, respostaUsuario bool, bina string, gravaAudio bool) (*model.TotalVoiceResponse, error) {
 
 	audio := new(model.Audio)
 	audio.NumeroDestino = numero
 	audio.URLAudio = urlAudio
 	audio.RespostaUsuario = respostaUsuario
 	audio.Bina = bina
+	audio.GravarAudio = gravaAudio
 
 	response := new(model.TotalVoiceResponse)
 

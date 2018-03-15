@@ -10,6 +10,7 @@ type Audio struct {
 	URLAudio        string `json:"url_audio"`
 	RespostaUsuario bool   `json:"resposta_usuario"`
 	Bina            string `json:"bina"`
+	GravarAudio     bool   `json:"gravar_audio"`
 }
 
 // AudioResponse struct
