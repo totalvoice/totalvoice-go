@@ -10,6 +10,8 @@ import (
 type DIDService struct {
 	client   HTTPClient
 	response Response
+
+	Relatorio *DIDRelatorioService
 }
 
 // NewDIDService - Serviço para o gerenciamento de Ramais
@@ -18,6 +20,10 @@ func NewDIDService(httpClient HTTPClient, response Response) *DIDService {
 	service := &DIDService{
 		client:   httpClient,
 		response: response,
+		Relatorio: &DIDRelatorioService{
+			client:   httpClient,
+			response: response,
+		},
 	}
 
 	return service
