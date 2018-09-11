@@ -25,7 +25,7 @@ func NewFilaService(httpClient HTTPClient, response Response) *FilaService {
 }
 
 // Busca fila
-func (s FilaService) Buscar(id int) (*model.Fila, error) {
+func (s FilaService) Buscar(id int) (*model.FilaResponse, error) {
 
 	fila := new(model.Fila)
 	sID := strconv.Itoa(id)
@@ -38,7 +38,7 @@ func (s FilaService) Buscar(id int) (*model.Fila, error) {
 }
 
 // Busca ramal na fila
-func (s FilaService) BuscarRamalFila(id int, ramalId int) (*model.Fila, error) {
+func (s FilaService) BuscarRamalFila(id int, ramalId int) (*model.FilaResponse, error) {
 
 	fila := new(model.Fila)
 	sID := strconv.Itoa(id)
