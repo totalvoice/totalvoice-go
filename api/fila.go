@@ -64,7 +64,7 @@ func (s FilaService) Criar(fila model.Fila) (*model.FilaResponse, error) {
 }
 
 // Adicionar - Adiciona ramal na fila
-func (s FilaService) Criar(fila model.Fila) (*model.FilaResponse, error) {
+func (s FilaService) AdicionaRamalFila(fila model.Fila) (*model.FilaResponse, error) {
 	
 	sID := strconv.Itoa(fila.ID)
 	resp := new(model.FilaResponse)
@@ -96,7 +96,7 @@ func (s FilaService) ExcluirRamalFila(id int, ramalId int) (*model.TotalVoiceRes
 	sRamalID := strconv.Itoa(ramalId)
 	resp := new(model.TotalVoiceResponse)
 
-	http, err := s.client.DeleteResource(RotaFila, sID+"/"+ramalId) 
+	http, err := s.client.DeleteResource(RotaFila, sID+"/"+sRamalID) 
 	if err != nil {
 		return nil, err
 	}
