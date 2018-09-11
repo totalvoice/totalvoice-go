@@ -31,4 +31,7 @@ const (
 	RotaWebphone = "/webphone"
 	// RotaDID - rota para DIDs
 	RotaDID = "/did"
+	// RotaDID - rota para DIDs
+	RotaFila = "/fila"
+
 )
