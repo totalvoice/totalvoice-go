@@ -1,11 +1,12 @@
 package model
 
-// AudioRelatorio struct
+// DIDRelatorio struct
 type DIDRelatorio struct {
 	DataInicio string `json:"data_inicio"`
 	DataFim    string `json:"data_fim"`
 }
 
+// DIDRelatorioResponse struct
 type DIDRelatorioResponse struct {
 	Status   int    `json:"status"`
 	Sucesso  bool   `json:"sucesso"`

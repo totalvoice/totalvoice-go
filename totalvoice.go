@@ -20,6 +20,7 @@ type TotalVoice struct {
 	Conta       *api.ContaService
 	Composto    *api.CompostoService
 	Chamada     *api.ChamadaService
+	Fila        *api.FilaService
 	Conferencia *api.ConferenciaService
 	SMS         *api.SMSService
 	TTS         *api.TTSService
@@ -47,6 +48,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.Audio = api.NewAudioService(request, response)
 	tvce.Webhook = api.NewWebhookService(request, response)
 	tvce.Saldo = api.NewSaldoService(request, response)
+	tvce.Fila = api.NewFilaService(request, response)
 	tvce.Conta = api.NewContaService(request, response)
 	tvce.Composto = api.NewCompostoService(request, response)
 	tvce.Chamada = api.NewChamadaService(request, response)
