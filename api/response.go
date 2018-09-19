@@ -8,6 +8,7 @@ import (
 // Response - struct
 type Response struct{}
 
+// HandleResponse - realiza o tratamento do Response
 func (r Response) HandleResponse(modelResponse interface{}, httpResponse *http.Response) interface{} {
 
 	if httpResponse != nil {

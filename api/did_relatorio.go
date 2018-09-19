@@ -6,7 +6,7 @@ import (
 	"github.com/totalvoice/totalvoice-go/api/model"
 )
 
-// AudioRelatorioService service
+// DIDRelatorioService service
 type DIDRelatorioService struct {
 	client   HTTPClient
 	response Response

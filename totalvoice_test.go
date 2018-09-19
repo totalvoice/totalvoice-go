@@ -36,4 +36,6 @@ func TestConstrutorRetornaInstanciaDosServicos(t *testing.T) {
 	assert.Equal(t, "*api.RamalService", reflect.TypeOf(tvce.Ramal).String())
 	assert.Equal(t, "*api.URAService", reflect.TypeOf(tvce.URA).String())
 	assert.Equal(t, "*api.DIDService", reflect.TypeOf(tvce.DID).String())
+	assert.Equal(t, "*api.FilaService", reflect.TypeOf(tvce.Fila).String())
+	assert.Equal(t, "*api.BinaService", reflect.TypeOf(tvce.Bina).String())
 }

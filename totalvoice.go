@@ -14,6 +14,7 @@ type TotalVoice struct {
 	client api.HTTPClient
 
 	Perfil      *api.PerfilService
+	Bina        *api.BinaService
 	Audio       *api.AudioService
 	Webhook     *api.WebhookService
 	Saldo       *api.SaldoService
@@ -45,6 +46,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	response := api.Response{}
 
 	tvce.Perfil = api.NewPerfilService(request, response)
+	tvce.Bina = api.NewBinaService(request, response)
 	tvce.Audio = api.NewAudioService(request, response)
 	tvce.Webhook = api.NewWebhookService(request, response)
 	tvce.Saldo = api.NewSaldoService(request, response)
