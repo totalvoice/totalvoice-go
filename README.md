@@ -62,7 +62,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Chamada.Criar("4811111111", "4822222222", nil)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -86,7 +86,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Chamada.Buscar(123) // ID da chamada
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -111,8 +111,42 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Chamada.Encerrar(123) // ID da chamada
-    
+
     if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(response)
+}
+```
+
+> ##### Relatório de Chamadas
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/totalvoice/totalvoice-go"
+)
+
+func main() {
+
+	client := totalvoice.NewTotalVoiceClient("access-token")
+	di := time.Date(2017, time.December, 06, 00, 20, 0, 0, time.Local)
+	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
+	// parametros opcionais - filtros e paginacao
+	filtros := map[string]interface{}{
+		"origem": "48999999999",
+		"destino": "489888888888",
+		"posicao": 0,
+		"limite":  100,
+	}
+
+	response, err := client.Chamada.Relatorio.Gerar(di, df, filtros)
+
+  if err != nil {
 		panic(err)
 	}
 
@@ -135,7 +169,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.SMS.Enviar("4811111111", "Minha mensagem SMS", false, false, nil)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -161,7 +195,7 @@ func main() {
 	di := time.Date(2017, time.December, 06, 00, 20, 0, 0, time.Local)
 	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
 	response, err := client.SMS.Relatorio.Gerar(di, df)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -186,7 +220,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.TTS.Enviar("4811111111", "Minha mensagem TTS", nil)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -217,7 +251,7 @@ func main() {
         "bina": "4811111111",
 	}
     response, err := client.TTS.Enviar("4811111111", "Minha mensagem TTS", opcoes)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -243,7 +277,7 @@ func main() {
 	di := time.Date(2017, time.December, 06, 00, 20, 0, 0, time.Local)
 	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
 	response, err := client.TTS.Relatorio.Gerar(di, df)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -268,7 +302,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Audio.Enviar("4811111111", "http://foooo.bar/audio.mp3", false, "4811111111", false)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -296,7 +330,7 @@ func main() {
     ramal.Login = "meulogin@login.com.br"
     ramal.Senha = "12345789"
     response, err := client.Ramal.Criar(ramal)
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -320,7 +354,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Conta.Buscar(123) // ID da Conta
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -344,7 +378,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Perfil.MinhaConta()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -368,7 +402,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Saldo.ConsultaSaldo()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -391,7 +425,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Perfil.GeraURLRecarga()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -415,7 +449,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.Perfil.RelatorioRecarga()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -439,7 +473,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.DID.Estoque()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -463,7 +497,7 @@ func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
     response, err := client.DID.Adquirir(123) // ID do DID
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -487,7 +521,7 @@ func main() {
 
     client := totalvoice.NewClient("access-token", "https://seudominio.com.br")
     response, err := client.Saldo.ConsultaSaldo()
-    
+
     if err != nil {
 		panic(err)
 	}
@@ -506,4 +540,3 @@ Quer contribuir? [clique aqui](https://github.com/totalvoice/totalvoice-go/blob/
 > ### Licença
 
 Esta biblioteca segue os termos de uso da [MIT](https://github.com/totalvoice/totalvoice-go/blob/master/LICENSE)
-
