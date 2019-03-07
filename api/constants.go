@@ -35,4 +35,6 @@ const (
 	RotaFila = "/fila"
 	// RotaBina - rota para validação de Bina
 	RotaBina = "/bina"
+	// RotaValidaNumero - rota para validação de número
+	RotaValidaNumero = "/valida_numero"
 )

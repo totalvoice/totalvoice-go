@@ -13,21 +13,22 @@ const (
 type TotalVoice struct {
 	client api.HTTPClient
 
-	Perfil      *api.PerfilService
-	Bina        *api.BinaService
-	Audio       *api.AudioService
-	Webhook     *api.WebhookService
-	Saldo       *api.SaldoService
-	Conta       *api.ContaService
-	Composto    *api.CompostoService
-	Chamada     *api.ChamadaService
-	Fila        *api.FilaService
-	Conferencia *api.ConferenciaService
-	SMS         *api.SMSService
-	TTS         *api.TTSService
-	Ramal       *api.RamalService
-	URA         *api.URAService
-	DID         *api.DIDService
+	Perfil      	*api.PerfilService
+	Bina        	*api.BinaService
+	Audio       	*api.AudioService
+	Webhook     	*api.WebhookService
+	Saldo       	*api.SaldoService
+	Conta       	*api.ContaService
+	Composto    	*api.CompostoService
+	Chamada     	*api.ChamadaService
+	Fila        	*api.FilaService
+	Conferencia 	*api.ConferenciaService
+	SMS         	*api.SMSService
+	TTS         	*api.TTSService
+	Ramal       	*api.RamalService
+	URA         	*api.URAService
+	DID         	*api.DIDService
+	ValidaNumero 	*api.ValidaNumeroService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -60,6 +61,6 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.Ramal = api.NewRamalService(request, response)
 	tvce.URA = api.NewURAService(request, response)
 	tvce.DID = api.NewDIDService(request, response)
-
+	tvce.ValidaNumero = api.NewValidaNumeroService(request, response)
 	return tvce
 }
