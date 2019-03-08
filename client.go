@@ -46,7 +46,7 @@ func (c *Client) DeleteResource(path string, sid interface{}) (*http.Response, e
 	return c.makeRequest("DELETE", nil, url, nil)
 }
 
-// makeRequest Make a request to the Twilio API.
+// makeRequest Make a request to the TotalVoice API.
 func (c *Client) makeRequest(method string, model api.Model, path string, params map[string]interface{}) (*http.Response, error) {
 
 	uri := c.buildURI(path)
