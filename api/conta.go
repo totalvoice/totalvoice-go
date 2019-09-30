@@ -83,3 +83,20 @@ func (s ContaService) Atualizar(conta model.Conta) (*model.ContaResponse, error)
 	res := s.response.HandleResponse(resp, http)
 	return res.(*model.ContaResponse), err
 }
+
+// RecargaBonus - Credita valor de bônus em uma conta filha
+func (s ContaService) RecargaBonus(id int, valor float32) (*model.TotalVoiceResponse, error) {
+
+	sID := strconv.Itoa(id)
+	recargaBonus := new(model.RecargaBonus)
+	recargaBonus.Valor = valor
+
+	resp := new(model.TotalVoiceResponse)
+
+	http, err := s.client.CreateResource(recargaBonus, RotaConta+"/"+sID+"/bonus")
+	if err != nil {
+		return nil, err
+	}
+	res := s.response.HandleResponse(resp, http)
+	return res.(*model.TotalVoiceResponse), err
+}
