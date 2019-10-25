@@ -11,6 +11,7 @@ type Chamada struct {
 	BinaOrigem    string    `json:"bina_origem"`
 	BinaDestino   string    `json:"bina_destino"`
 	Tags          string    `json:"tags"`
+	DetectaCaixa  bool      `json:"detecta_caixa`
 }
 
 // ChamadaResponse struct
