@@ -25,7 +25,6 @@ type RamalResponse struct {
 		ID              int    `json:"id"`
 		Ramal           string `json:"ramal"`
 		Login           string `json:"login"`
-		Senha           string `json:"senha"`
 		LigacaoExterna  bool   `json:"ligacao_externa"`
 		LigacaoCelular  bool   `json:"ligacao_celular"`
 		GravarAudio     bool   `json:"gravar_audio"`
