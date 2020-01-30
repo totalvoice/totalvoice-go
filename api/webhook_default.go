@@ -30,7 +30,7 @@ func (s WebhookDefaultService) Excluir(nome string) (*model.WebhookDefaultRespon
 }
 
 // Salva - Cadastra ou atualiza um webhook default
-func (s WebhookDefaultService) Salva(nome, url string) (*model.WebhookDefault, error) {
+func (s WebhookDefaultService) Salvar(nome, url string) (*model.WebhookDefault, error) {
 
 	webhook := new(model.WebhookDefaultResponse)
 	webhook.URL = url

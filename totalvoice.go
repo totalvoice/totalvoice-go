@@ -17,6 +17,7 @@ type TotalVoice struct {
 	Bina        	*api.BinaService
 	Audio       	*api.AudioService
 	Webhook     	*api.WebhookService
+	WebhookDefault  *api.WebhookDefaultService
 	Saldo       	*api.SaldoService
 	Conta       	*api.ContaService
 	Composto    	*api.CompostoService
