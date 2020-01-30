@@ -7,6 +7,17 @@ type WebhookDefaultService struct {
 	response Response
 }
 
+// NewWebhookService - Serviço para o gerenciamento de Webhooks
+func NewWebhookDefaultService(httpClient HTTPClient, response Response) *WebhookDefaultService {
+
+	service := &WebhookDefaultService{
+		client:   httpClient,
+		response: response,
+	}
+
+	return service
+}
+
 // Listar - Listar todos webhooks default
 func (s WebhookDefaultService) Listar() (*model.WebhookDefaultResponse, error) {
 	webhook := new(model.WebhookDefaultResponse)
@@ -30,7 +41,7 @@ func (s WebhookDefaultService) Excluir(nome string) (*model.WebhookDefaultRespon
 }
 
 // Salva - Cadastra ou atualiza um webhook default
-func (s WebhookDefaultService) Salvar(nome, url string) (*model.WebhookDefault, error) {
+func (s WebhookDefaultService) Salvar(nome string, url string) (*model.WebhookDefaultResponse, error) {
 
 	webhook := new(model.WebhookDefaultResponse)
 	webhook.URL = url
@@ -41,5 +52,5 @@ func (s WebhookDefaultService) Salvar(nome, url string) (*model.WebhookDefault, 
 		return nil, err
 	}
 	res := s.response.HandleResponse(response, http)
-	return res.(*model.WebhookDefault), err
+	return res.(*model.WebhookDefaultResponse), err
 }
