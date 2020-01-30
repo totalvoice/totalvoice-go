@@ -14,7 +14,6 @@ type RamalRelatorioResponse struct {
 			ID             int    `json:"id"`
 			Ramal          string `json:"ramal"`
 			Login          string `json:"login"`
-			Senha          string `json:"senha"`
 			LigacaoExterna bool   `json:"ligacao_externa"`
 		} `json:"relatorio"`
 	} `json:"dados"`
