@@ -17,6 +17,7 @@ type TotalVoice struct {
 	Bina        	*api.BinaService
 	Audio       	*api.AudioService
 	Webhook     	*api.WebhookService
+	WebhookDefault  *api.WebhookDefaultService
 	Saldo       	*api.SaldoService
 	Conta       	*api.ContaService
 	Composto    	*api.CompostoService
@@ -26,6 +27,7 @@ type TotalVoice struct {
 	SMS         	*api.SMSService
 	TTS         	*api.TTSService
 	Ramal       	*api.RamalService
+	RamalFila		*api.RamalFilaService
 	URA         	*api.URAService
 	DID         	*api.DIDService
 	ValidaNumero 	*api.ValidaNumeroService
@@ -50,6 +52,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.Bina = api.NewBinaService(request, response)
 	tvce.Audio = api.NewAudioService(request, response)
 	tvce.Webhook = api.NewWebhookService(request, response)
+	tvce.WebhookDefault = api.NewWebhookDefaultService(request, response)
 	tvce.Saldo = api.NewSaldoService(request, response)
 	tvce.Fila = api.NewFilaService(request, response)
 	tvce.Conta = api.NewContaService(request, response)
@@ -59,6 +62,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.SMS = api.NewSMSService(request, response)
 	tvce.TTS = api.NewTTSService(request, response)
 	tvce.Ramal = api.NewRamalService(request, response)
+	tvce.RamalFila = api.NewRamalFilaService(request, response)
 	tvce.URA = api.NewURAService(request, response)
 	tvce.DID = api.NewDIDService(request, response)
 	tvce.ValidaNumero = api.NewValidaNumeroService(request, response)
