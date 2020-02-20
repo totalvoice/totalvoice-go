@@ -2,20 +2,19 @@ package model
 
 // Ramal model
 type RamalFila struct {
-	ID              int    `json:"id"`
-	Fila			string `json: "fila"`
-	PausaStatus		bool   `json: "pausa_status"`
+	StatusPausa		bool   	`json:"status_pausa"`
+	Fila			int 	`json:"fila"`
 }
 
 // RamalResponse struct
 type RamalFilaResponse struct {
-	Status   int    `json:"status"`
+	Status   int	`json:"status"`
 	Sucesso  bool   `json:"sucesso"`
 	Motivo   int    `json:"motivo"`
 	Mensagem string `json:"mensagem"`
 	Dados    struct {
-		ID              int    `json:"id"`
-		Fila			string `json: "fila"`
-		PausaStatus		bool   `json: "pausa_status"`
+		RamalId 		int		`json:"ramal_id"`
+		StatusPausa		bool 	`json:"pausado"`
+		Fila			int 	`json:"fila"`
 	} `json:"dados"`
 }

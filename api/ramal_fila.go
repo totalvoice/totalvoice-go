@@ -2,7 +2,6 @@ package api
 
 import (
 	"strconv"
-
 	"github.com/totalvoice/totalvoice-go/api/model"
 )
 
@@ -24,11 +23,11 @@ func NewRamalFilaService(httpClient HTTPClient, response Response) *RamalFilaSer
 }
 
 // Atualizar - Atualiza um ramal
-func (s RamalFilaService) Atualizar_ramal_fila(ramal model.RamalFila) (*model.RamalFilaResponse, error) {
+func (s RamalFilaService) Atualizar(id int, data model.RamalFila) (*model.RamalFilaResponse, error) {
 
-	sID := strconv.Itoa(ramal.ID)
 	resp := new(model.RamalFilaResponse)
-	http, err := s.client.UpdateResource(ramal, RotaRamal, sID + RotaFila)
+	sID := strconv.Itoa(id)
+	http, err := s.client.UpdateResource(data, RotaRamal, sID + RotaFila)
 	if err != nil {
 		return nil, err
 	}
