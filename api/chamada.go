@@ -51,7 +51,7 @@ func (s ChamadaService) Criar(numeroOrigem string, numeroDestino string, opcoes 
 			chamada.BinaDestino = value
 		case "tags":
 			chamada.Tags = value
-		case "detecta_caixa":
+		case "detecta_caixa_origem":
 			b, _ := strconv.ParseBool(value)
 			chamada.DetectaCaixa = b
 		}
