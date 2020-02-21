@@ -37,4 +37,6 @@ const (
 	RotaBina = "/bina"
 	// RotaValidaNumero - rota para validação de número
 	RotaValidaNumero = "/valida_numero"
+	// RotaWebhookDefault - rota para o webhook default
+	RotaWebhookDefault = "/conta/webhook-default"
 )

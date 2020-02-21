@@ -17,6 +17,7 @@ type TotalVoice struct {
 	Bina        	*api.BinaService
 	Audio       	*api.AudioService
 	Webhook     	*api.WebhookService
+	WebhookDefault  *api.WebhookDefaultService
 	Saldo       	*api.SaldoService
 	Conta       	*api.ContaService
 	Composto    	*api.CompostoService
@@ -50,6 +51,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.Bina = api.NewBinaService(request, response)
 	tvce.Audio = api.NewAudioService(request, response)
 	tvce.Webhook = api.NewWebhookService(request, response)
+	tvce.WebhookDefault = api.NewWebhookDefaultService(request, response)
 	tvce.Saldo = api.NewSaldoService(request, response)
 	tvce.Fila = api.NewFilaService(request, response)
 	tvce.Conta = api.NewContaService(request, response)
