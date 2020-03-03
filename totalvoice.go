@@ -26,7 +26,7 @@ type TotalVoice struct {
 	SMS         	*api.SMSService
 	TTS         	*api.TTSService
 	Ramal       	*api.RamalService
-	RamalFila		*api.RamalFilaService
+	RamalFila	*api.RamalFilaService
 	URA         	*api.URAService
 	DID         	*api.DIDService
 	ValidaNumero 	*api.ValidaNumeroService
