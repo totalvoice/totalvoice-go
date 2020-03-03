@@ -13,8 +13,8 @@ type RamalFilaResponse struct {
 	Motivo   int    `json:"motivo"`
 	Mensagem string `json:"mensagem"`
 	Dados    struct {
-		RamalId 		int		`json:"ramal_id"`
-		StatusPausa		bool 	`json:"pausado"`
-		Fila			int 	`json:"fila"`
+		RamalId 	int	`json:"ramal_id"`
+		StatusPausa	bool 	`json:"pausado"`
+		Fila		int	`json:"fila"
 	} `json:"dados"`
 }
