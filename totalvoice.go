@@ -27,6 +27,7 @@ type TotalVoice struct {
 	SMS         	*api.SMSService
 	TTS         	*api.TTSService
 	Ramal       	*api.RamalService
+	RamalFila	*api.RamalFilaService
 	URA         	*api.URAService
 	DID         	*api.DIDService
 	ValidaNumero 	*api.ValidaNumeroService
@@ -61,6 +62,7 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.SMS = api.NewSMSService(request, response)
 	tvce.TTS = api.NewTTSService(request, response)
 	tvce.Ramal = api.NewRamalService(request, response)
+	tvce.RamalFila = api.NewRamalFilaService(request, response)
 	tvce.URA = api.NewURAService(request, response)
 	tvce.DID = api.NewDIDService(request, response)
 	tvce.ValidaNumero = api.NewValidaNumeroService(request, response)
