@@ -15,6 +15,6 @@ type RamalFilaResponse struct {
 	Dados    struct {
 		RamalId 	int	`json:"ramal_id"`
 		StatusPausa	bool 	`json:"pausado"`
-		Fila		int	`json:"fila"
+		Fila		int	`json:"fila"`
 	} `json:"dados"`
 }
