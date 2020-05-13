@@ -35,6 +35,20 @@ func (s URAService) Criar(ura model.URA) (*model.TotalVoiceResponse, error) {
 	return res.(*model.TotalVoiceResponse), err
 }
 
+// Obter - Obter um URA
+func (u URAService) Obter(id int) (*model.TotalVoiceResponse, error){
+	sID := strconv.Itoa(id)
+	ura := new(model.URA)
+
+	http, err := u.client.GetResource(ura, RotaURA, sID)
+	if err != nil {
+		return nil, err
+	}
+
+	res := u.response.HandleResponse(ura, http)
+	return res.(*model.TotalVoiceResponse), err
+}
+
 // Atualizar - Atualiza a URA
 func (s URAService) Atualizar(ura model.URA) (*model.TotalVoiceResponse, error) {
 
