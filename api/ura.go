@@ -36,16 +36,17 @@ func (s URAService) Criar(ura model.URA) (*model.TotalVoiceResponse, error) {
 }
 
 // Obter - Obter um URA
-func (u URAService) Obter(id int) (*model.TotalVoiceResponse, error){
+func (s URAService) Buscar(id int) (*model.TotalVoiceResponse, error){
 	sID := strconv.Itoa(id)
 	ura := new(model.URA)
+	resp := new(model.TotalVoiceResponse)
 
-	http, err := u.client.GetResource(ura, RotaURA, sID)
+	http, err := s.client.GetResource(ura, RotaURA, sID)
 	if err != nil {
 		return nil, err
 	}
 
-	res := u.response.HandleResponse(ura, http)
+	res := s.response.HandleResponse(resp, http)
 	return res.(*model.TotalVoiceResponse), err
 }
 
