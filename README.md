@@ -14,7 +14,6 @@ Cliente em Golang para consumo da API da TotalVoice
 - Gerenciamento da Conta
 - Gerenciamento da Central
 - Gerenciamento de DID
-- Gerenciamento de Valida Número
 
 > ### Requisitos
 
@@ -45,7 +44,6 @@ Os métodos da API que poderão ser invocados:
 - sms
 - tts
 - did
-- validaNumero
 
 A seguir exemplos de como pode ser utilizada esta biblioteca.
 
@@ -531,31 +529,6 @@ func main() {
 	fmt.Println(response)
 }
 ```
-
-> ##### Usando o Valida Número para saber se o número está ativo
-
-```go
-package main
-
-import (
-    "fmt"
-
-    "github.com/totalvoice/totalvoice-go"
-)
-
-func main() {
-
-    client := totalvoice.NewClient("access-token", "https://seudominio.com.br")
-    response, err := client.ValidaNumero.Criar("4811111111");
-
-    if err != nil {
-        panic(err)
-    }
-
-    fmt.Println(response)
-}
-```
-
 
 Mais informações sobre os métodos disponíveis podem ser encontrados na documentação da [API](https://api.totalvoice.com.br/doc/#/)
 
