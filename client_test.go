@@ -10,7 +10,7 @@ func TestPropriedadesComValoresCorretos(t *testing.T) {
 
 	client := &Client{accessToken: "meu-access-token", baseURI: BaseURI}
 	assert.Equal(t, "meu-access-token", client.accessToken)
-	assert.Equal(t, "https://api2.totalvoice.com.br", client.baseURI)
+	assert.Equal(t, "https://voice-api.zenvia.com", client.baseURI)
 
 	client2 := &Client{accessToken: "meu-access-token-2", baseURI: "https://meudominio.com.br"}
 	assert.Equal(t, "meu-access-token-2", client2.accessToken)
@@ -29,7 +29,7 @@ func TestMetodoBuildURI(t *testing.T) {
 	path := "/path"
 	uri := client.buildURI(path)
 
-	assert.Equal(t, "https://api2.totalvoice.com.br/path", uri)
+	assert.Equal(t, "https://voice-api.zenvia.com/path", uri)
 }
 
 func TestBuildQueryStringRetornaValorCorreto(t *testing.T) {

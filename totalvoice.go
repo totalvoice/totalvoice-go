@@ -6,7 +6,7 @@ import (
 
 // BaseURI - URI Base
 const (
-	BaseURI = "https://api2.totalvoice.com.br"
+	BaseURI = "https://voice-api.zenvia.com"
 )
 
 // TotalVoice struct
