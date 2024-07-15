@@ -61,7 +61,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
-    response, err := client.Chamada.Criar("4811111111", "4822222222", nil)
+    response, err := client.Chamada.Criar("+5510999999999", "+5510999999999", nil)
 
     if err != nil {
 		panic(err)
@@ -138,8 +138,8 @@ func main() {
 	df := time.Date(2017, time.December, 06, 18, 20, 0, 0, time.Local)
 	// parametros opcionais - filtros e paginacao
 	filtros := map[string]interface{}{
-		"origem": "48999999999",
-		"destino": "489888888888",
+		"origem": "+5510999999999",
+		"destino": "+5510999999999",
 		"posicao": 0,
 		"limite":  100,
 	}
@@ -168,7 +168,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
-    response, err := client.SMS.Enviar("4811111111", "Minha mensagem SMS", false, false, nil)
+    response, err := client.SMS.Enviar("+5510999999999", "Minha mensagem SMS", false, false, nil)
 
     if err != nil {
 		panic(err)
@@ -219,7 +219,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
-    response, err := client.TTS.Enviar("4811111111", "Minha mensagem TTS", nil)
+    response, err := client.TTS.Enviar("+5510999999999", "Minha mensagem TTS", nil)
 
     if err != nil {
 		panic(err)
@@ -248,9 +248,9 @@ func main() {
         "velocidade": 1,
         "resposta_usuario": true,
         "tipo_voz": "br-Vitoria",
-        "bina": "4811111111",
+        "bina": "+5510888888888",
 	}
-    response, err := client.TTS.Enviar("4811111111", "Minha mensagem TTS", opcoes)
+    response, err := client.TTS.Enviar("+5510999999999", "Minha mensagem TTS", opcoes)
 
     if err != nil {
 		panic(err)
@@ -301,7 +301,7 @@ import (
 func main() {
 
     client := totalvoice.NewTotalVoiceClient("access-token")
-    response, err := client.Audio.Enviar("4811111111", "http://foooo.bar/audio.mp3", false, "4811111111", false)
+    response, err := client.Audio.Enviar("+5510999999999", "http://foooo.bar/audio.mp3", false, "+5510999999999", false)
 
     if err != nil {
 		panic(err)
