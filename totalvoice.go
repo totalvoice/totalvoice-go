@@ -6,31 +6,30 @@ import (
 
 // BaseURI - URI Base
 const (
-	BaseURI = "https://api2.totalvoice.com.br"
+	BaseURI = "https://voice-api.zenvia.com"
 )
 
 // TotalVoice struct
 type TotalVoice struct {
 	client api.HTTPClient
 
-	Perfil      	*api.PerfilService
-	Bina        	*api.BinaService
-	Audio       	*api.AudioService
-	Webhook     	*api.WebhookService
-	WebhookDefault  *api.WebhookDefaultService
-	Saldo       	*api.SaldoService
-	Conta       	*api.ContaService
-	Composto    	*api.CompostoService
-	Chamada     	*api.ChamadaService
-	Fila        	*api.FilaService
-	Conferencia 	*api.ConferenciaService
-	SMS         	*api.SMSService
-	TTS         	*api.TTSService
-	Ramal       	*api.RamalService
-	RamalFila	*api.RamalFilaService
-	URA         	*api.URAService
-	DID         	*api.DIDService
-	ValidaNumero 	*api.ValidaNumeroService
+	Perfil         *api.PerfilService
+	Bina           *api.BinaService
+	Audio          *api.AudioService
+	Webhook        *api.WebhookService
+	WebhookDefault *api.WebhookDefaultService
+	Saldo          *api.SaldoService
+	Conta          *api.ContaService
+	Composto       *api.CompostoService
+	Chamada        *api.ChamadaService
+	Fila           *api.FilaService
+	Conferencia    *api.ConferenciaService
+	SMS            *api.SMSService
+	TTS            *api.TTSService
+	Ramal          *api.RamalService
+	RamalFila      *api.RamalFilaService
+	URA            *api.URAService
+	DID            *api.DIDService
 }
 
 // NewTotalVoiceClient - Cria TotalVoice struct.
@@ -65,6 +64,5 @@ func NewClient(accessToken string, baseURI string) *TotalVoice {
 	tvce.RamalFila = api.NewRamalFilaService(request, response)
 	tvce.URA = api.NewURAService(request, response)
 	tvce.DID = api.NewDIDService(request, response)
-	tvce.ValidaNumero = api.NewValidaNumeroService(request, response)
 	return tvce
 }

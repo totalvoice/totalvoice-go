@@ -18,6 +18,8 @@ type Client struct {
 	client      *http.Client
 }
 
+const Version = "1.8.0"
+
 // GetResource - HTTP GET
 func (c *Client) GetResource(model api.Model, path string, sid interface{}) (*http.Response, error) {
 	url := c.url(sid, path)
@@ -74,7 +76,7 @@ func (c *Client) makeRequest(method string, model api.Model, path string, params
 	// Headers
 	req.Header.Add("Access-Token", c.accessToken)
 	req.Header.Add("Content-Type", "application/json")
-
+	req.Header.Add("User-Agent", "lib-go/"+Version)
 	return client.Do(req)
 }
 
